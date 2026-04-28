@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Reset — Dysfunctional Dynasty</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .reset-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+    .roster-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 1.25rem;
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+    }
+    .roster-card h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem;
+      color: var(--white);
+      letter-spacing: 1px;
+      margin-bottom: 0.15rem;
+    }
+    .roster-card .subtitle { font-size: 0.75rem; color: var(--gold); margin-bottom: 0.75rem; font-style: italic; }
+    .roster-card .mandatory { color: var(--red); font-weight: 600; font-style: normal; }
+    .pick-list { font-size: 0.8rem; line-height: 1.8; }
+    .pick-list .rd { color: var(--text-muted); font-family: 'Oswald', sans-serif; font-size: 0.7rem; letter-spacing: 1px; }
+    .pick-list .player { color: var(--text); }
+    .pick-list .pos { color: var(--gold); font-weight: 600; font-size: 0.72rem; margin-left: 0.25rem; }
+    .pick-list .team-tag { color: var(--text-muted); font-size: 0.72rem; }
+    .pick-list .rookie-pick { color: var(--purple-light); font-style: italic; }
+    .pick-list .section-break { margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid rgba(79,38,131,0.15); }
+
+    .decision-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.75rem; margin: 1.5rem 0 2.5rem; }
+    .decision-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      text-align: center;
+      clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+    }
+    .decision-card .icon { font-size: 1.5rem; margin-bottom: 0.35rem; }
+    .decision-card .name { font-family: 'Oswald', sans-serif; font-size: 0.85rem; color: var(--white); letter-spacing: 1px; }
+    .decision-card .verdict { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; margin-top: 0.25rem; }
+    .decision-card .verdict.reset { color: var(--gold); }
+    .decision-card .verdict.kept { color: var(--green); }
+    .decision-card .verdict.forced { color: var(--red); }
+
+    .draft-board { width: 100%; border-collapse: collapse; font-size: 0.8rem; margin-top: 1rem; }
+    .draft-board th {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-align: left;
+      padding: 0.6rem 0.4rem;
+      border-bottom: 2px solid var(--purple);
+      position: sticky;
+      top: 60px;
+      background: var(--bg);
+    }
+    .draft-board td {
+      padding: 0.45rem 0.4rem;
+      border-bottom: 1px solid rgba(79,38,131,0.12);
+    }
+    .draft-board tr:hover td { background: var(--gold-soft); }
+    .draft-board .pick-num { font-family: 'Oswald', sans-serif; color: var(--gold); font-weight: 600; width: 50px; }
+    .draft-board .owner-col { color: var(--text-muted); }
+    .draft-board .player-col { color: var(--white); font-weight: 500; }
+    .draft-board .pos-col { font-weight: 600; }
+    .draft-board .pos-QB { color: #ff6b6b; }
+    .draft-board .pos-RB { color: #6bdfff; }
+    .draft-board .pos-WR { color: #6bff8e; }
+    .draft-board .pos-TE { color: #ffb86b; }
+    .draft-board .rookie-row td { font-style: italic; opacity: 0.6; }
+    .draft-board .round-header td {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 2px;
+      color: var(--purple-light);
+      padding: 0.75rem 0.4rem 0.35rem;
+      border-bottom: 1px solid var(--border);
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">DYSFUNCTIONAL<span>DYNASTY</span></a>
+    <div class="nav-toggle" onclick="this.nextElementSibling.classList.toggle('open')"><span></span><span></span><span></span></div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="teams.html">Teams</a>
+      <a href="history.html">History</a>
+      <a href="reset.html" class="active">The Reset</a>
+      <a href="awards.html">Awards</a>
+      <a href="analytics.html">Analytics</a>
+      <a href="draft.html">Draft</a>
+    </div>
+  </div>
+</nav>
+
+<div class="hero" style="min-height:70vh;">
+  <div class="hero-content">
+    <div style="font-size:3rem;margin-bottom:0.5rem;">🔄</div>
+    <div style="font-size:0.7rem;font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:4px;text-transform:uppercase;color:var(--gold);margin-bottom:0.75rem;">2025 Offseason</div>
+    <h1 style="font-size:clamp(2.5rem,8vw,4.5rem);letter-spacing:2px;color:var(--white);line-height:0.95;margin-bottom:0.75rem;">THE<br><span style="color:var(--gold);">RESET</span></h1>
+    <p style="color:var(--text-muted);font-size:1rem;font-weight:300;max-width:520px;margin:0 auto;">coalj went back-to-back in 2023 and 2024. The Dynasty Reset Rule was triggered. His roster was wiped. Everyone else had a choice.</p>
+  </div>
+</div>
+
+<section class="section">
+
+  <!-- The Rule -->
+  <div class="card" style="border-color:var(--gold);margin-bottom:2.5rem;">
+    <h3 style="font-family:'Oswald',sans-serif;font-size:0.85rem;letter-spacing:2px;color:var(--gold);text-transform:uppercase;margin-bottom:0.5rem;">The Dynasty Reset Rule</h3>
+    <p style="font-size:0.9rem;line-height:1.8;">Win the championship two consecutive years and you trigger an <strong style="color:var(--gold);">optional redraft</strong> for the entire league. Every team chooses: keep your roster or start from scratch in a 10-round startup draft. The catch? The back-to-back champion's redraft is <strong style="color:var(--red);">mandatory</strong>. The crown comes at a cost.</p>
+  </div>
+
+  <!-- The Decisions -->
+  <h2 class="section-title">The Decisions</h2>
+  <p class="section-sub">Who blew it up. Who stood pat.</p>
+
+  <div class="decision-grid">
+    <div class="decision-card">
+      <div class="icon">👑</div>
+      <div class="name">COALJ</div>
+      <div class="verdict forced">MANDATORY RESET</div>
+    </div>
+    <div class="decision-card">
+      <div class="icon">🔄</div>
+      <div class="name">PLUND3342</div>
+      <div class="verdict reset">OPTED TO RESET</div>
+    </div>
+    <div class="decision-card">
+      <div class="icon">🔄</div>
+      <div class="name">THECADESTER</div>
+      <div class="verdict reset">OPTED TO RESET</div>
+    </div>
+    <div class="decision-card">
+      <div class="icon">🔄</div>
+      <div class="name">DAWERNI98</div>
+      <div class="verdict reset">OPTED TO RESET</div>
+    </div>
+    <div class="decision-card">
+      <div class="icon">🔒</div>
+      <div class="name">ARWANDL3R</div>
+      <div class="verdict kept">KEPT ROSTER</div>
+    </div>
+    <div class="decision-card">
+      <div class="icon">🔒</div>
+      <div class="name">RBENSON4</div>
+      <div class="verdict kept">KEPT ROSTER</div>
+    </div>
+    <div class="decision-card">
+      <div class="icon">🔒</div>
+      <div class="name">UPCOMINGCARROT</div>
+      <div class="verdict kept">KEPT ROSTER</div>
+    </div>
+    <div class="decision-card">
+      <div class="icon">🔒</div>
+      <div class="name">DRAKEVERS</div>
+      <div class="verdict kept">KEPT ROSTER</div>
+    </div>
+  </div>
+
+  <!-- New Rosters -->
+  <h2 class="section-title">The New Rosters</h2>
+  <p class="section-sub">10 rounds. 80 picks. 4 teams starting over.</p>
+
+  <div class="reset-grid">
+
+    <!-- coalj -->
+    <div class="roster-card">
+      <h3>👑 COALJ (COLE)</h3>
+      <div class="subtitle"><span class="mandatory">MANDATORY RESET</span> · Prev: 24-4, 24-4 (back-to-back champ)</div>
+      <div class="pick-list">
+        <div><span class="rd">R1.03</span> <span class="player">Justin Jefferson</span> <span class="pos">WR</span> <span class="team-tag">MIN</span></div>
+        <div><span class="rd">R1.06</span> <span class="player">Puka Nacua</span> <span class="pos">WR</span> <span class="team-tag">LAR</span></div>
+        <div><span class="rd">R2.11</span> <span class="player">Sam LaPorta</span> <span class="pos">TE</span> <span class="team-tag">DET</span></div>
+        <div><span class="rd">R2.14</span> <span class="player">Caleb Williams</span> <span class="pos">QB</span> <span class="team-tag">CHI</span></div>
+        <div><span class="rd">R3.19</span> <span class="player">Jordan Addison</span> <span class="pos">WR</span> <span class="team-tag">MIN</span></div>
+        <div><span class="rd">R3.22</span> <span class="player">Chuba Hubbard</span> <span class="pos">RB</span> <span class="team-tag">CAR</span></div>
+        <div><span class="rd">R4.27</span> <span class="player">Drake Maye</span> <span class="pos">QB</span> <span class="team-tag">NE</span></div>
+        <div><span class="rd">R4.30</span> <span class="player">Jared Goff</span> <span class="pos">QB</span> <span class="team-tag">DET</span></div>
+        <div class="section-break"><span class="rd">R5.35</span> <span class="rookie-pick">'25 Rookie Pick</span></div>
+        <div><span class="rd">R5.38</span> <span class="player">Josh Downs</span> <span class="pos">WR</span> <span class="team-tag">IND</span></div>
+        <div><span class="rd">R6.43</span> <span class="player">Baker Mayfield</span> <span class="pos">QB</span> <span class="team-tag">TB</span></div>
+        <div><span class="rd">R6.46</span> <span class="rookie-pick">'25 Rookie Pick</span></div>
+        <div><span class="rd">R7.51</span> <span class="rookie-pick">'25 Rookie Pick</span></div>
+        <div><span class="rd">R7.54</span> <span class="player">Michael Pittman</span> <span class="pos">WR</span> <span class="team-tag">IND</span></div>
+        <div><span class="rd">R8.59</span> <span class="player">Pat Freiermuth</span> <span class="pos">TE</span> <span class="team-tag">PIT</span></div>
+        <div><span class="rd">R8.62</span> <span class="player">Najee Harris</span> <span class="pos">RB</span> <span class="team-tag">LAC</span></div>
+        <div><span class="rd">R9.67</span> <span class="player">Rachaad White</span> <span class="pos">RB</span> <span class="team-tag">TB</span></div>
+        <div><span class="rd">R9.70</span> <span class="player">Jalen McMillan</span> <span class="pos">WR</span> <span class="team-tag">TB</span></div>
+        <div><span class="rd">R10.75</span> <span class="rookie-pick">'25 Rookie Pick</span></div>
+        <div><span class="rd">R10.78</span> <span class="player">Romeo Doubs</span> <span class="pos">WR</span> <span class="team-tag">GB</span></div>
+      </div>
+      <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--text-muted);">2025 Result: 13-15 · 5th place</div>
+    </div>
+
+    <!-- plund3342 -->
+    <div class="roster-card">
+      <h3>🔄 PLUND3342 (LAPORTA POTTY)</h3>
+      <div class="subtitle">Opted to reset · Prev: 5-23 (last place)</div>
+      <div class="pick-list">
+        <div><span class="rd">R1.01</span> <span class="player">Jahmyr Gibbs</span> <span class="pos">RB</span> <span class="team-tag">DET</span></div>
+        <div><span class="rd">R1.08</span> <span class="player">Ladd McConkey</span> <span class="pos">WR</span> <span class="team-tag">LAC</span></div>
+        <div><span class="rd">R2.09</span> <span class="player">Bucky Irving</span> <span class="pos">RB</span> <span class="team-tag">TB</span></div>
+        <div><span class="rd">R2.16</span> <span class="player">Bo Nix</span> <span class="pos">QB</span> <span class="team-tag">DEN</span></div>
+        <div><span class="rd">R3.17</span> <span class="player">Christian McCaffrey</span> <span class="pos">RB</span> <span class="team-tag">SF</span></div>
+        <div><span class="rd">R3.24</span> <span class="player">David Njoku</span> <span class="pos">TE</span> <span class="team-tag">CLE</span></div>
+        <div><span class="rd">R4.25</span> <span class="player">Jaylen Waddle</span> <span class="pos">WR</span> <span class="team-tag">MIA</span></div>
+        <div><span class="rd">R4.32</span> <span class="player">Trevor Lawrence</span> <span class="pos">QB</span> <span class="team-tag">JAX</span></div>
+        <div class="section-break"><span class="rd">R5.33</span> <span class="player">Jake Ferguson</span> <span class="pos">TE</span> <span class="team-tag">DAL</span></div>
+        <div><span class="rd">R5.40</span> <span class="player">DK Metcalf</span> <span class="pos">WR</span> <span class="team-tag">PIT</span></div>
+        <div><span class="rd">R6.41</span> <span class="player">Tyreek Hill</span> <span class="pos">WR</span> <span class="team-tag">MIA</span></div>
+        <div><span class="rd">R6.48</span> <span class="player">Courtland Sutton</span> <span class="pos">WR</span> <span class="team-tag">DEN</span></div>
+        <div><span class="rd">R7.49</span> <span class="player">Khalil Shakir</span> <span class="pos">WR</span> <span class="team-tag">BUF</span></div>
+        <div><span class="rd">R7.56</span> <span class="player">D'Andre Swift</span> <span class="pos">RB</span> <span class="team-tag">CHI</span></div>
+        <div><span class="rd">R8.57</span> <span class="player">Jaylen Warren</span> <span class="pos">RB</span> <span class="team-tag">PIT</span></div>
+        <div><span class="rd">R8.64</span> <span class="player">Tank Bigsby</span> <span class="pos">RB</span> <span class="team-tag">JAX</span></div>
+        <div><span class="rd">R9.65</span> <span class="player">Justin Fields</span> <span class="pos">QB</span> <span class="team-tag">NYJ</span></div>
+        <div><span class="rd">R9.72</span> <span class="player">Calvin Ridley</span> <span class="pos">WR</span> <span class="team-tag">TEN</span></div>
+        <div><span class="rd">R10.73</span> <span class="player">Rashid Shaheed</span> <span class="pos">WR</span> <span class="team-tag">NO</span></div>
+        <div><span class="rd">R10.80</span> <span class="player">Ja'Tavion Sanders</span> <span class="pos">TE</span> <span class="team-tag">CAR</span></div>
+      </div>
+      <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--text-muted);">2025 Result: 15-13 · 4th place (+10 wins from prev year)</div>
+    </div>
+
+    <!-- TheCadester -->
+    <div class="roster-card">
+      <h3>🔄 THECADESTER</h3>
+      <div class="subtitle">Opted to reset · New to league</div>
+      <div class="pick-list">
+        <div><span class="rd">R1.02</span> <span class="player">Jayden Daniels</span> <span class="pos">QB</span> <span class="team-tag">WAS</span></div>
+        <div><span class="rd">R1.07</span> <span class="player">DeVonta Smith</span> <span class="pos">WR</span> <span class="team-tag">PHI</span></div>
+        <div><span class="rd">R2.10</span> <span class="player">Jonathan Taylor</span> <span class="pos">RB</span> <span class="team-tag">IND</span></div>
+        <div><span class="rd">R2.15</span> <span class="player">Rashee Rice</span> <span class="pos">WR</span> <span class="team-tag">KC</span></div>
+        <div><span class="rd">R3.18</span> <span class="player">Josh Jacobs</span> <span class="pos">RB</span> <span class="team-tag">GB</span></div>
+        <div><span class="rd">R3.23</span> <span class="player">Mark Andrews</span> <span class="pos">TE</span> <span class="team-tag">BAL</span></div>
+        <div><span class="rd">R4.26</span> <span class="player">Justin Herbert</span> <span class="pos">QB</span> <span class="team-tag">LAC</span></div>
+        <div><span class="rd">R4.31</span> <span class="player">George Pickens</span> <span class="pos">WR</span> <span class="team-tag">PIT</span></div>
+        <div class="section-break"><span class="rd">R5.34</span> <span class="player">Cade Otton</span> <span class="pos">TE</span> <span class="team-tag">TB</span></div>
+        <div><span class="rd">R5.39</span> <span class="player">Mike Evans</span> <span class="pos">WR</span> <span class="team-tag">TB</span></div>
+        <div><span class="rd">R6.42</span> <span class="player">Cole Kmet</span> <span class="pos">TE</span> <span class="team-tag">CHI</span></div>
+        <div><span class="rd">R6.47</span> <span class="player">Chris Godwin</span> <span class="pos">WR</span> <span class="team-tag">TB</span></div>
+        <div><span class="rd">R7.50</span> <span class="player">James Conner</span> <span class="pos">RB</span> <span class="team-tag">ARI</span></div>
+        <div><span class="rd">R7.55</span> <span class="player">Aaron Jones</span> <span class="pos">RB</span> <span class="team-tag">MIN</span></div>
+        <div><span class="rd">R8.58</span> <span class="rookie-pick">'25 Rookie Pick</span></div>
+        <div><span class="rd">R8.63</span> <span class="player">Geno Smith</span> <span class="pos">QB</span> <span class="team-tag">LV</span></div>
+        <div><span class="rd">R9.66</span> <span class="player">Cooper Kupp</span> <span class="pos">WR</span> <span class="team-tag">SEA</span></div>
+        <div><span class="rd">R9.71</span> <span class="player">Tank Dell</span> <span class="pos">WR</span> <span class="team-tag">HOU</span></div>
+        <div><span class="rd">R10.74</span> <span class="player">Marvin Mims</span> <span class="pos">WR</span> <span class="team-tag">DEN</span></div>
+        <div><span class="rd">R10.79</span> <span class="player">Adonai Mitchell</span> <span class="pos">WR</span> <span class="team-tag">IND</span></div>
+      </div>
+      <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--text-muted);">2025 Result: 10-18 · 6th place (first season)</div>
+    </div>
+
+    <!-- DaWerni98 -->
+    <div class="roster-card">
+      <h3>🔄 DAWERNI98</h3>
+      <div class="subtitle">Opted to reset · Prev: 4-24 (last place)</div>
+      <div class="pick-list">
+        <div><span class="rd">R1.04</span> <span class="player">CeeDee Lamb</span> <span class="pos">WR</span> <span class="team-tag">DAL</span></div>
+        <div><span class="rd">R1.05</span> <span class="player">Trey McBride</span> <span class="pos">TE</span> <span class="team-tag">ARI</span></div>
+        <div><span class="rd">R2.12</span> <span class="player">James Cook</span> <span class="pos">RB</span> <span class="team-tag">BUF</span></div>
+        <div><span class="rd">R2.13</span> <span class="player">Zay Flowers</span> <span class="pos">WR</span> <span class="team-tag">BAL</span></div>
+        <div><span class="rd">R3.20</span> <span class="rookie-pick">'25 Rookie Pick</span></div>
+        <div><span class="rd">R3.21</span> <span class="rookie-pick">'25 Rookie Pick</span></div>
+        <div><span class="rd">R4.28</span> <span class="player">Kyler Murray</span> <span class="pos">QB</span> <span class="team-tag">ARI</span></div>
+        <div><span class="rd">R4.29</span> <span class="player">Brock Purdy</span> <span class="pos">QB</span> <span class="team-tag">SF</span></div>
+        <div class="section-break"><span class="rd">R5.36</span> <span class="player">Brandon Aiyuk</span> <span class="pos">WR</span> <span class="team-tag">SF</span></div>
+        <div><span class="rd">R5.37</span> <span class="player">Joe Mixon</span> <span class="pos">RB</span> <span class="team-tag">HOU</span></div>
+        <div><span class="rd">R6.44</span> <span class="player">Travis Etienne</span> <span class="pos">RB</span> <span class="team-tag">JAX</span></div>
+        <div><span class="rd">R6.45</span> <span class="rookie-pick">'25 Rookie Pick</span></div>
+        <div><span class="rd">R7.52</span> <span class="player">Tony Pollard</span> <span class="pos">RB</span> <span class="team-tag">TEN</span></div>
+        <div><span class="rd">R7.53</span> <span class="player">Xavier Legette</span> <span class="pos">WR</span> <span class="team-tag">CAR</span></div>
+        <div><span class="rd">R8.60</span> <span class="player">Tua Tagovailoa</span> <span class="pos">QB</span> <span class="team-tag">MIA</span></div>
+        <div><span class="rd">R8.61</span> <span class="player">Travis Kelce</span> <span class="pos">TE</span> <span class="team-tag">KC</span></div>
+        <div><span class="rd">R9.68</span> <span class="player">Ben Sinnott</span> <span class="pos">TE</span> <span class="team-tag">WAS</span></div>
+        <div><span class="rd">R9.69</span> <span class="player">Jakobi Meyers</span> <span class="pos">WR</span> <span class="team-tag">LV</span></div>
+        <div><span class="rd">R10.76</span> <span class="player">DeMario Douglas</span> <span class="pos">WR</span> <span class="team-tag">NE</span></div>
+        <div><span class="rd">R10.77</span> <span class="rookie-pick">'25 Rookie Pick</span></div>
+      </div>
+      <div style="margin-top:0.75rem;font-size:0.75rem;color:var(--text-muted);">2025 Result: 9-19 · 7th place</div>
+    </div>
+
+  </div>
+
+  <!-- The Aftermath -->
+  <h2 class="section-title">The Aftermath</h2>
+  <div class="gold-line"></div>
+
+  <div class="card" style="margin-bottom:1rem;">
+    <p style="font-size:0.9rem;line-height:1.8;">The reset shook the entire league. <strong style="color:var(--gold);">coalj</strong> — the two-time defending champion — was stripped of his dynasty roster and forced to rebuild from scratch. He went from 24-4 to 13-15. The crown cost him everything.</p>
+    <p style="font-size:0.9rem;line-height:1.8;margin-top:0.75rem;"><strong style="color:var(--gold);">plund3342</strong> made the most of it — jumping from 5-23 to 15-13, a 10-win improvement. Gibbs at 1.01 was the foundation.</p>
+    <p style="font-size:0.9rem;line-height:1.8;margin-top:0.75rem;">Meanwhile, the teams that <strong style="color:var(--green);">kept their rosters</strong> held strong. <strong style="color:var(--gold);">arwandl3r</strong> rode roster continuity all the way to the championship at 22-6. <strong style="color:var(--gold);">rbenson4 & GMadison</strong> led the league in scoring at 3,122 PF.</p>
+    <p style="font-size:0.9rem;line-height:1.8;margin-top:0.75rem;">The lesson? In dynasty, you can reset the roster — but you can't reset the relationships between the players. Chemistry takes time.</p>
+  </div>
+
+  <div class="analytics-grid">
+    <div class="stat-card"><div class="val">+10 W</div><div class="label">plund3342 Improvement</div><div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.2rem;">5-23 → 15-13</div></div>
+    <div class="stat-card"><div class="val">-11 W</div><div class="label">coalj Regression</div><div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.2rem;">24-4 → 13-15</div></div>
+    <div class="stat-card"><div class="val">4 / 8</div><div class="label">Teams Reset</div></div>
+    <div class="stat-card"><div class="val">80</div><div class="label">Picks Made</div></div>
+  </div>
+
+</section>
+
+<footer>Dysfunctional Dynasty &copy; 2026 — Powered by <span>LeagueSavant</span></footer>
+
+</body>
+</html>
