@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics — Dysfunctional Dynasty</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">DYSFUNCTIONAL<span>DYNASTY</span></a>
+    <div class="nav-toggle" onclick="this.nextElementSibling.classList.toggle('open')"><span></span><span></span><span></span></div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="teams.html">Teams</a>
+      <a href="history.html">History</a>
+      <a href="awards.html">Awards</a>
+      <a href="analytics.html" class="active">Analytics</a>
+      <a href="draft.html">Draft</a>
+    </div>
+  </div>
+</nav>
+
+<div class="section-divider" style="margin-top:60px;">
+  <img src="https://images.unsplash.com/photo-1551958219-acbc608c6377?w=1200&q=80" alt="">
+  <div class="section-divider-overlay">
+    <div class="num">📊</div>
+    <h2>The Numbers</h2>
+  </div>
+</div>
+
+<section class="section">
+  <h2 class="section-title">2025 Season Analytics</h2>
+  <p class="section-sub">Points, luck, and the cold hard truth.</p>
+
+  <!-- Top-Line Stats -->
+  <div class="analytics-grid">
+    <div class="stat-card"><div class="val">3,122</div><div class="label">Most Points For</div><div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.25rem;">rbenson4</div></div>
+    <div class="stat-card"><div class="val">2,332</div><div class="label">Fewest Points For</div><div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.25rem;">DrakeEvers</div></div>
+    <div class="stat-card"><div class="val">22-6</div><div class="label">Best Record</div><div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.25rem;">arwandl3r</div></div>
+    <div class="stat-card"><div class="val">6-22</div><div class="label">Worst Record</div><div style="font-size:0.7rem;color:var(--text-muted);margin-top:0.25rem;">DrakeEvers</div></div>
+  </div>
+
+  <!-- Points For / Against -->
+  <h3 style="font-family:'Oswald',sans-serif;font-size:0.85rem;letter-spacing:2px;color:var(--gold);margin:2rem 0 1rem;text-transform:uppercase;">Points For vs Points Against</h3>
+
+  <div style="overflow-x:auto;">
+    <table class="standings-table">
+      <thead>
+        <tr><th>Team</th><th>PF</th><th>PA</th><th>Diff</th><th>Record</th><th>PPG</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="team-name">rbenson4 & GMadison</td><td>3,122.26</td><td>2,778.66</td><td style="color:var(--green);">+343.60</td><td class="record">20-8</td><td>111.51</td></tr>
+        <tr><td class="team-name">LaPorta Potty</td><td>2,918.34</td><td>2,849.86</td><td style="color:var(--green);">+68.48</td><td class="record">15-13</td><td>104.23</td></tr>
+        <tr><td class="team-name champ">arwandl3r 🏆</td><td>2,886.96</td><td>2,597.02</td><td style="color:var(--green);">+289.94</td><td class="record">22-6</td><td>103.11</td></tr>
+        <tr><td class="team-name">UpcomingCarrot25</td><td>2,778.02</td><td>2,718.72</td><td style="color:var(--green);">+59.30</td><td class="record">17-11</td><td>99.22</td></tr>
+        <tr><td class="team-name">Cole</td><td>2,640.74</td><td>2,571.04</td><td style="color:var(--green);">+69.70</td><td class="record">13-15</td><td>94.31</td></tr>
+        <tr><td class="team-name">TheCadester</td><td>2,600.34</td><td>2,761.76</td><td style="color:var(--red);">-161.42</td><td class="record">10-18</td><td>92.87</td></tr>
+        <tr><td class="team-name">DaWerni98</td><td>2,504.98</td><td>2,770.12</td><td style="color:var(--red);">-265.14</td><td class="record">9-19</td><td>89.46</td></tr>
+        <tr><td class="team-name">DrakeEvers</td><td>2,332.72</td><td>2,737.18</td><td style="color:var(--red);">-404.46</td><td class="record">6-22</td><td>83.31</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Potential Points -->
+  <h3 style="font-family:'Oswald',sans-serif;font-size:0.85rem;letter-spacing:2px;color:var(--gold);margin:2rem 0 1rem;text-transform:uppercase;">Max Potential Points (Optimal Lineup)</h3>
+
+  <div style="overflow-x:auto;">
+    <table class="standings-table">
+      <thead>
+        <tr><th>Team</th><th>PF (Actual)</th><th>PP (Max)</th><th>Efficiency</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="team-name">rbenson4 & GMadison</td><td>3,122.26</td><td>3,836.82</td><td>81.4%</td></tr>
+        <tr><td class="team-name">LaPorta Potty</td><td>2,918.34</td><td>3,433.06</td><td>85.0%</td></tr>
+        <tr><td class="team-name champ">arwandl3r 🏆</td><td>2,886.96</td><td>3,376.94</td><td>85.5%</td></tr>
+        <tr><td class="team-name">Cole</td><td>2,640.74</td><td>3,355.80</td><td>78.7%</td></tr>
+        <tr><td class="team-name">UpcomingCarrot25</td><td>2,778.02</td><td>3,373.58</td><td>82.4%</td></tr>
+        <tr><td class="team-name">DaWerni98</td><td>2,504.98</td><td>3,111.88</td><td>80.5%</td></tr>
+        <tr><td class="team-name">TheCadester</td><td>2,600.34</td><td>2,930.50</td><td>88.7%</td></tr>
+        <tr><td class="team-name">DrakeEvers</td><td>2,332.72</td><td>2,655.74</td><td>87.8%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card" style="margin-top:2rem;text-align:center;">
+    <div style="font-size:1.5rem;margin-bottom:0.5rem;">💡</div>
+    <p style="color:var(--text-muted);font-size:0.85rem;">
+      <strong style="color:var(--gold);">Key Insight:</strong> rbenson4 & GMadison scored the most points in 2025 but lost to arwandl3r for the championship. Cole went from back-to-back titles to a losing record — the dynasty cycle is real. LaPorta Potty had the most efficient lineup management (85.0%) with the 2nd highest PF despite finishing 4th.
+    </p>
+  </div>
+</section>
+
+<footer>Dysfunctional Dynasty &copy; 2026 — Powered by <span>LeagueSavant</span></footer>
+
+</body>
+</html>
