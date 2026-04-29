@@ -6,6 +6,221 @@
   <title>Awards — Dysfunctional Dynasty</title>
   <link rel="stylesheet" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── SEASON TABS ── */
+    .season-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: 0;
+      border-bottom: 2px solid var(--purple);
+    }
+    .season-tab {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 0.7rem 1.5rem;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+    }
+    .season-tab:hover { color: var(--gold); }
+    .season-tab.active { color: var(--gold); border-bottom-color: var(--gold); background: var(--gold-soft); }
+    .season-panel { display: none; }
+    .season-panel.active { display: block; }
+
+    /* ── AWARD CARD ── */
+    .award-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 1.1rem;
+      clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+      transition: all 0.2s;
+    }
+    .award-card:hover { border-color: var(--border-gold); background: var(--card-hover); }
+    .award-card.gold-award {
+      background: linear-gradient(135deg, rgba(255,198,47,0.08), var(--card));
+      border-color: rgba(255,198,47,0.3);
+    }
+    .award-emoji {
+      font-size: 1.75rem;
+      line-height: 1;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+    .award-body { flex: 1; }
+    .award-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.2rem;
+    }
+    .award-winner {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+    }
+    .award-detail {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+      line-height: 1.5;
+    }
+
+    /* ── ALL-TIME AWARD CARD (bigger) ── */
+    .alltime-award {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      margin-bottom: 0.75rem;
+      clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+      transition: all 0.2s;
+    }
+    .alltime-award:hover { border-color: var(--border-gold); background: var(--card-hover); }
+    .alltime-award.featured {
+      background: linear-gradient(135deg, rgba(79,38,131,0.3), var(--card));
+      border-color: var(--gold);
+    }
+    .at-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .at-emoji { font-size: 2rem; line-height: 1; flex-shrink: 0; }
+    .at-label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.15rem;
+    }
+    .at-winner {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+    }
+    .at-detail {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-left: 3rem;
+    }
+
+    /* ── SUPERLATIVE CARD ── */
+    .super-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 0.75rem;
+    }
+    .super-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 1.25rem;
+      clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 9px 100%, 0 calc(100% - 9px));
+      transition: all 0.2s;
+    }
+    .super-card:hover { border-color: var(--border-gold); background: var(--card-hover); }
+    .super-emoji { font-size: 1.5rem; margin-bottom: 0.4rem; }
+    .super-label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.2rem;
+    }
+    .super-winner {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 0.35rem;
+    }
+    .super-detail {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* ── CHAMP HIGHLIGHT ── */
+    .season-champ {
+      background: linear-gradient(135deg, var(--purple-dark), var(--card));
+      border: 2px solid var(--gold);
+      padding: 1.75rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+    }
+    .season-champ::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(255,198,47,0.07), transparent 70%);
+    }
+    .sc-inner { position: relative; z-index: 1; }
+    .sc-trophy { font-size: 2.5rem; margin-bottom: 0.4rem; }
+    .sc-label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.2rem;
+    }
+    .sc-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(1.75rem, 5vw, 2.5rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+    }
+    .sc-record {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.9rem;
+      color: var(--gold);
+      letter-spacing: 2px;
+      margin-top: 0.25rem;
+    }
+
+    /* ── SECTION UTILITIES ── */
+    .awards-section-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--border-gold);
+    }
+    .awards-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minspace(320px, 1fr));
+      gap: 0.75rem;
+    }
+    .mt2 { margin-top: 2rem; }
+    .mt15 { margin-top: 1.5rem; }
+    .mb15 { margin-bottom: 1.5rem; }
+  </style>
 </head>
 <body>
 
@@ -18,7 +233,7 @@
       <a href="teams.html">Teams</a>
       <a href="history.html">History</a>
       <a href="reset.html">The Reset</a>
-        <a href="awards.html" class="active">Awards</a>
+      <a href="awards.html" class="active">Awards</a>
       <a href="analytics.html">Analytics</a>
       <a href="draft.html">Draft</a>
     </div>
@@ -33,33 +248,346 @@
   </div>
 </div>
 
-<section class="section">
-  <h2 class="section-title">Season Awards</h2>
-  <p class="section-sub">Superlatives and hardware. Coming soon.</p>
+<section class="section" style="max-width:1000px;">
 
-  <div class="analytics-grid" style="margin-top:2rem;">
-    <div class="stat-card" style="grid-column:span 2;">
-      <div style="font-size:2rem;margin-bottom:0.5rem;">🏆</div>
-      <div class="val">coalj</div>
-      <div class="label">2x Champion (2023, 2024)</div>
+  <!-- ══════════════════════════════════════════════
+       ALL-TIME AWARDS
+  ══════════════════════════════════════════════ -->
+  <h2 class="section-title">All-Time Awards</h2>
+  <p class="section-sub">League history · 3 seasons · The records that define the dynasty</p>
+  <div class="gold-line"></div>
+
+  <div class="alltime-award featured">
+    <div class="at-header">
+      <div class="at-emoji">🏆</div>
+      <div>
+        <div class="at-label">Most Championships</div>
+        <div class="at-winner">coalj</div>
+      </div>
     </div>
-    <div class="stat-card" style="grid-column:span 2;">
-      <div style="font-size:2rem;margin-bottom:0.5rem;">⚡</div>
-      <div class="val">arwandl3r</div>
-      <div class="label">2025 Champion · Dethroned the King</div>
+    <div class="at-detail">2 titles — 2023 and 2024. The only back-to-back champion in league history. His own dominance triggered the Dynasty Reset Rule that stripped his roster. The most decorated manager in the league and the cautionary tale about what happens when you win too much.</div>
+  </div>
+
+  <div class="alltime-award">
+    <div class="at-header">
+      <div class="at-emoji">👑</div>
+      <div>
+        <div class="at-label">All-Time Wins Leader</div>
+        <div class="at-winner">coalj — 61-23</div>
+      </div>
+    </div>
+    <div class="at-detail">Barely edges arwandl3r (60-24) for the all-time wins crown. One win separates the dethroned king from the new champion. The margin is thin and it's closing — arwandl3r gained ground in 2025 while coalj slipped to 13-15. This battle is far from over.</div>
+  </div>
+
+  <div class="alltime-award">
+    <div class="at-header">
+      <div class="at-emoji">📈</div>
+      <div>
+        <div class="at-label">Mr. Consistency</div>
+        <div class="at-winner">rbenson4 &amp; GMadison</div>
+      </div>
+    </div>
+    <div class="at-detail">20-8, 19-9, 20-8. Never below .500. Never below 19 wins. In three years, this team has not once had a losing record. That kind of sustained performance in a competitive dynasty league is genuinely rare — and it still hasn't won them a championship. The most frustrating award in the trophy case.</div>
+  </div>
+
+  <div class="alltime-award">
+    <div class="at-header">
+      <div class="at-emoji">💀</div>
+      <div>
+        <div class="at-label">Best Record Without a Ring</div>
+        <div class="at-winner">rbenson4 &amp; GMadison — 59-25, 0 titles</div>
+      </div>
+    </div>
+    <div class="at-detail">59 wins. 0 championships. The highest PF in the league in 2025 (3,122.26). The numbers scream dynasty contender — the results say something different. This is the award nobody wants to win, and yet here we are. The best team to never win it all in Dysfunctional Dynasty history.</div>
+  </div>
+
+  <div class="alltime-award">
+    <div class="at-header">
+      <div class="at-emoji">🔥</div>
+      <div>
+        <div class="at-label">Biggest Single-Season Turnaround</div>
+        <div class="at-winner">plund3342 — +10 wins</div>
+      </div>
+    </div>
+    <div class="at-detail">From 5-23 in 2024 to 15-13 in 2025. A 10-win improvement in a single offseason, powered by an aggressive reset of the entire roster. The biggest turnaround in league history. LaPorta Potty went from the punchline to the comeback story everyone is watching.</div>
+  </div>
+
+  <div class="alltime-award">
+    <div class="at-header">
+      <div class="at-emoji">📉</div>
+      <div>
+        <div class="at-label">Biggest Fall from Grace</div>
+        <div class="at-winner">coalj — 24-4 champion to 13-15</div>
+      </div>
+    </div>
+    <div class="at-detail">From the peak of two consecutive 24-4 seasons to a 13-15 record post-reset. An 11-win drop from his dynasty peak. The sharpest decline in league history — made uniquely painful because it was self-inflicted. coalj's own back-to-back triggered the rule that ended his era.</div>
+  </div>
+
+  <div class="alltime-award">
+    <div class="at-header">
+      <div class="at-emoji">🎢</div>
+      <div>
+        <div class="at-label">Most Volatile</div>
+        <div class="at-winner">DaWerni98</div>
+      </div>
+    </div>
+    <div class="at-detail">9-19, 4-24, 9-19. Three seasons of inconsistency so consistent it's almost impressive. The reset year was supposed to change the trajectory — and technically it did (4-24 to 9-19 is improvement) — but returning to the exact starting point after three years tells its own story. Consistently inconsistent.</div>
+  </div>
+
+  <div class="alltime-award featured">
+    <div class="at-header">
+      <div class="at-emoji">🔒</div>
+      <div>
+        <div class="at-label">The Iron Throne</div>
+        <div class="at-winner">coalj — Back-to-Back Champion</div>
+      </div>
+    </div>
+    <div class="at-detail">The only manager in league history to win back-to-back championships. The only manager to trigger the Dynasty Reset Rule. The only manager to have their dynasty both built and destroyed by their own success. Love him or hate him, coalj wrote the first chapter of this league — and the rest of the history is written in reaction to what he built.</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SEASON AWARDS
+  ══════════════════════════════════════════════ -->
+  <div class="mt2">
+    <h2 class="section-title" style="margin-bottom:0.25rem;">Season Awards</h2>
+    <p class="section-sub" style="margin-bottom:1rem;">Year-by-year hardware · Every season's storylines</p>
+
+    <div class="season-tabs">
+      <button class="season-tab active" onclick="showSeason('2025', this)">2025</button>
+      <button class="season-tab" onclick="showSeason('2024', this)">2024</button>
+      <button class="season-tab" onclick="showSeason('2023', this)">2023</button>
+    </div>
+
+    <!-- 2025 AWARDS -->
+    <div id="season-2025" class="season-panel active" style="padding-top:1.5rem;">
+      <div class="season-champ">
+        <div class="sc-inner">
+          <div class="sc-trophy">🏆</div>
+          <div class="sc-label">2025 Champion</div>
+          <div class="sc-name">arwandl3r</div>
+          <div class="sc-record">22 – 6 · 2,886.96 PF</div>
+        </div>
+      </div>
+
+      <div class="award-card gold-award">
+        <div class="award-emoji">⭐</div>
+        <div class="award-body">
+          <div class="award-title">Regular Season MVP</div>
+          <div class="award-winner">arwandl3r</div>
+          <div class="award-detail">22-6, the best regular season record in 2025. Patient, relentless, and built to win the whole thing. Kept the roster through the Dynasty Reset and rewarded that loyalty with the championship. Back-to-back MVP and champion is as close to a dynasty as you can build in this format.</div>
+        </div>
+      </div>
+
+      <div class="award-card">
+        <div class="award-emoji">💰</div>
+        <div class="award-body">
+          <div class="award-title">Points King — Highest PF</div>
+          <div class="award-winner">rbenson4 &amp; GMadison</div>
+          <div class="award-detail">3,122.26 points — the highest PF in 2025, and it wasn't particularly close. More points than the champion. More points than everyone. The cruel irony of fantasy football: sometimes the most dominant regular season team watches someone else hold the trophy. The points are there. The ring still isn't.</div>
+        </div>
+      </div>
+
+      <div class="award-card gold-award">
+        <div class="award-emoji">📈</div>
+        <div class="award-body">
+          <div class="award-title">Most Improved</div>
+          <div class="award-winner">plund3342 (LaPorta Potty)</div>
+          <div class="award-detail">5-23 in 2024 to 15-13 in 2025 — a 10-win improvement that is the single biggest single-season turnaround in league history. Opted into the Dynasty Reset when most managers would have been too proud, rebuilt from scratch, and came back competitive. The comeback story of the year.</div>
+        </div>
+      </div>
+
+      <div class="award-card">
+        <div class="award-emoji">💀</div>
+        <div class="award-body">
+          <div class="award-title">Toilet Bowl Champion</div>
+          <div class="award-winner">DrakeEvers</div>
+          <div class="award-detail">6-22. Last place. The co-commissioner of this league finished dead last in 2025, a full 6 wins below the previous worst record (9-19). The loyal roster holder who chose to keep his squad through the Reset watched it implode spectacularly. There is no loyalty badge in dynasty football — there is only the record.</div>
+        </div>
+      </div>
+
+      <div class="award-card">
+        <div class="award-emoji">🔄</div>
+        <div class="award-body">
+          <div class="award-title">Reset MVP — Best Record Among Reset Teams</div>
+          <div class="award-winner">plund3342 (LaPorta Potty)</div>
+          <div class="award-detail">Of the four teams that participated in the 2025 Dynasty Reset (coalj, plund3342, TheCadester, DaWerni98), plund3342 emerged with the best record at 15-13. The reset wasn't just survival — it was a full resurrection. The award that matters most in a reset year.</div>
+        </div>
+      </div>
+
+      <div class="award-card">
+        <div class="award-emoji">💔</div>
+        <div class="award-body">
+          <div class="award-title">Reset Victim</div>
+          <div class="award-winner">coalj</div>
+          <div class="award-detail">Mandatory reset. Two 24-4 seasons, two championships, and then the rule you triggered comes for your roster. coalj went from the most dominant team in league history to 13-15 in a single offseason. The Reset Victim award is given to the manager who paid the highest price for winning too much. There is a poetry to it, and coalj probably doesn't appreciate it.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2024 AWARDS -->
+    <div id="season-2024" class="season-panel" style="padding-top:1.5rem;">
+      <div class="season-champ">
+        <div class="sc-inner">
+          <div class="sc-trophy">🏆</div>
+          <div class="sc-label">2024 Champion</div>
+          <div class="sc-name">coalj</div>
+          <div class="sc-record">24 – 4 · 3,074.60 PF</div>
+        </div>
+      </div>
+
+      <div class="award-card gold-award">
+        <div class="award-emoji">⭐</div>
+        <div class="award-body">
+          <div class="award-title">Regular Season MVP</div>
+          <div class="award-winner">coalj</div>
+          <div class="award-detail">24-4 for the second consecutive year. Back-to-back dominant regular seasons, back-to-back championships. coalj in 2024 was operating on a different level than the rest of this league — relentless, consistent, and impossible to beat when it mattered. The only question heading into 2025 was whether it would trigger the Reset. It did.</div>
+        </div>
+      </div>
+
+      <div class="award-card gold-award">
+        <div class="award-emoji">💰</div>
+        <div class="award-body">
+          <div class="award-title">Points King — Highest PF</div>
+          <div class="award-winner">coalj</div>
+          <div class="award-detail">3,074.60 points in 2024 — the highest PF in the league that season. Best record AND most points. The complete package. coalj swept the individual awards in 2024 the same way he swept the season. Dominant doesn't cover it.</div>
+        </div>
+      </div>
+
+      <div class="award-card">
+        <div class="award-emoji">📈</div>
+        <div class="award-body">
+          <div class="award-title">Most Improved</div>
+          <div class="award-winner">UpcomingCarrot25</div>
+          <div class="award-detail">From 9-19 in 2023 to 19-9 in 2024 — a 10-win improvement in a single season. The same magnitude turnaround that plund3342 would later achieve in 2025, but without the dramatic backstory. UpcomingCarrot25 just quietly went from bottom tier to playoff contender. Underrated. Unnoticed. Effective.</div>
+        </div>
+      </div>
+
+      <div class="award-card">
+        <div class="award-emoji">💀</div>
+        <div class="award-body">
+          <div class="award-title">Toilet Bowl Champion</div>
+          <div class="award-winner">DaWerni98</div>
+          <div class="award-detail">4-24 in 2024 — the worst single-season record in league history. Four wins. Twenty-four losses. The season that convinced DaWerni98 to opt into the Dynasty Reset. In a league where everyone is trying to build something, 4-24 is the universe's way of telling you it's time to try something completely different.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2023 AWARDS -->
+    <div id="season-2023" class="season-panel" style="padding-top:1.5rem;">
+      <div class="season-champ">
+        <div class="sc-inner">
+          <div class="sc-trophy">🏆</div>
+          <div class="sc-label">2023 Inaugural Champion</div>
+          <div class="sc-name">coalj</div>
+          <div class="sc-record">24 – 4 · 3,166.76 PF</div>
+        </div>
+      </div>
+
+      <div class="award-card gold-award">
+        <div class="award-emoji">⭐</div>
+        <div class="award-body">
+          <div class="award-title">Regular Season MVP</div>
+          <div class="award-winner">coalj</div>
+          <div class="award-detail">24-4 in the inaugural season. Dominant from day one. coalj came into the first year of this dynasty league and immediately established who was going to be in charge. Nobody else was close. The league didn't know it yet, but this was the beginning of a dynasty.</div>
+        </div>
+      </div>
+
+      <div class="award-card gold-award">
+        <div class="award-emoji">💰</div>
+        <div class="award-body">
+          <div class="award-title">Points King — Highest PF</div>
+          <div class="award-winner">coalj</div>
+          <div class="award-detail">3,166.76 PF in the inaugural season — still the league's all-time single-season points record. The benchmark that every team has been chasing since 2023 without matching it. coalj didn't just win the first season; he set the standard the league is still measured against.</div>
+        </div>
+      </div>
+
+      <div class="award-card">
+        <div class="award-emoji">💀</div>
+        <div class="award-body">
+          <div class="award-title">Toilet Bowl — Inaugural Edition</div>
+          <div class="award-winner">Multiple teams at 9-19</div>
+          <div class="award-detail">UpcomingCarrot25, plund3342, and DaWerni98 all finished 9-19 in the inaugural season — tied for last in the league. Three teams, identical misery, zero enjoyment. At least there was company at the bottom. Two of those three would go on to find their footing; one is still searching.</div>
+        </div>
+      </div>
+
+      <div class="award-card">
+        <div class="award-emoji">🌟</div>
+        <div class="award-body">
+          <div class="award-title">Rookie of the Year</div>
+          <div class="award-winner">Everyone (Inaugural Season)</div>
+          <div class="award-detail">The inaugural season, when every manager in the league was a rookie. No one knew the scoring system perfectly. No one knew who would dominate. Rosters were fresh, strategies untested, and the entire league was figuring out what Dysfunctional Dynasty was going to be. Looking back: coalj knew. The rest of us were just along for the ride.</div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <div style="text-align:center;margin-top:3rem;padding:3rem;border:1px dashed var(--border-gold);">
-    <div style="font-size:2.5rem;margin-bottom:1rem;">🗳️</div>
-    <h3 style="color:var(--gold);font-size:1rem;letter-spacing:2px;margin-bottom:0.5rem;">AWARDS VOTING COMING SOON</h3>
-    <p style="color:var(--text-muted);font-size:0.88rem;max-width:400px;margin:0 auto;">
-      MVP · Biggest Bust · Trade of the Year · Waiver Wire MVP · Luckiest Team · Most Improved · Toilet Bowl Champion
-    </p>
+  <!-- ══════════════════════════════════════════════
+       SUPERLATIVES
+  ══════════════════════════════════════════════ -->
+  <div class="mt2">
+    <h2 class="section-title">Superlatives</h2>
+    <p class="section-sub">The unofficial titles that define who these managers really are</p>
+    <div class="gold-line"></div>
+
+    <div class="super-grid">
+
+      <div class="super-card">
+        <div class="super-emoji">🏆</div>
+        <div class="super-label">"Dynasty Builder"</div>
+        <div class="super-winner">coalj</div>
+        <div class="super-detail">Back-to-back championships. The most dominant two-year run in league history. Then the fall — not to a rival, but to a rule triggered by his own success. The most dramatic arc in league history, all built and destroyed by the same manager. coalj didn't just build a dynasty. He lived one.</div>
+      </div>
+
+      <div class="super-card">
+        <div class="super-emoji">💍</div>
+        <div class="super-label">"Always a Bridesmaid"</div>
+        <div class="super-winner">rbenson4 &amp; GMadison</div>
+        <div class="super-detail">59-25 all-time. 0 rings. The most consistent team in the league without a championship. Three seasons of showing up, putting up huge numbers, and going home without hardware. The most talented team to never close. The bridesmaid who keeps giving better speeches than the bride.</div>
+      </div>
+
+      <div class="super-card">
+        <div class="super-emoji">📉</div>
+        <div class="super-label">"The Reset Curse"</div>
+        <div class="super-winner">coalj</div>
+        <div class="super-detail">His dynasty ended not because he got outplayed — but because he triggered the very rule he presumably helped craft. The Reset Curse is the unique misery of a champion who wins so much that the league's own safeguards take everything away. A self-fulfilling prophecy wrapped in a trophy.</div>
+      </div>
+
+      <div class="super-card">
+        <div class="super-emoji">🔥</div>
+        <div class="super-label">"Phoenix from the Ashes"</div>
+        <div class="super-winner">plund3342 (LaPorta Potty)</div>
+        <div class="super-detail">Dead last at 5-23. Opted into the reset when others might have been too proud. Came back 15-13, the biggest turnaround in league history. LaPorta Potty isn't just a funny name anymore — it's the story of a manager who hit rock bottom, made the hard call, and came back swinging.</div>
+      </div>
+
+      <div class="super-card">
+        <div class="super-emoji">🤝</div>
+        <div class="super-label">"Ride or Die"</div>
+        <div class="super-winner">arwandl3r</div>
+        <div class="super-detail">When the Dynasty Reset came calling, arwandl3r held. Kept the roster while others gambled. Trusted the process while everyone else was making moves. The patience wasn't passive — it was a strategy. And it paid off with a championship. Loyalty to the right roster is its own form of genius.</div>
+      </div>
+
+      <div class="super-card">
+        <div class="super-emoji">⚔️</div>
+        <div class="super-label">"Best Rivalry"</div>
+        <div class="super-winner">coalj vs arwandl3r</div>
+        <div class="super-detail">The dynasty king versus the manager who dethroned him. coalj dominated while arwandl3r climbed. The Reset cleared the board and arwandl3r seized the moment with a 22-6 championship season. coalj wants it back. arwandl3r isn't done. The best rivalry in this league is only getting started.</div>
+      </div>
+
+    </div>
   </div>
+
 </section>
 
 <footer>Dysfunctional Dynasty &copy; 2026 — Powered by <span>LeagueSavant</span></footer>
+
+<script>
+function showSeason(year, btn) {
+  document.querySelectorAll('.season-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('season-' + year).classList.add('active');
+  document.querySelectorAll('.season-tab').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+}
+</script>
 
 </body>
 </html>

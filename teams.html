@@ -6,6 +6,321 @@
   <title>Teams — Dysfunctional Dynasty</title>
   <link rel="stylesheet" href="css/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ── TEAM SELECTOR ── */
+    .team-selector {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .selector-label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .team-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .team-btn {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 0.55rem 1rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+    }
+    .team-btn:hover { border-color: var(--border-gold); color: var(--gold); background: var(--gold-soft); }
+    .team-btn.active { background: var(--purple); border-color: var(--gold); color: var(--gold); }
+
+    /* ── TEAM PROFILE ── */
+    .team-profile { display: none; }
+    .team-profile.active { display: block; }
+
+    /* ── PROFILE HEADER ── */
+    .profile-header {
+      background: linear-gradient(135deg, var(--purple-dark), var(--card));
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--gold);
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .profile-header::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(ellipse at top left, rgba(255,198,47,0.05), transparent 60%);
+    }
+    .ph-inner { position: relative; z-index: 1; }
+    .ph-emoji { font-size: 1.75rem; margin-bottom: 0.35rem; line-height: 1; }
+    .ph-owner {
+      font-family: 'Oswald', sans-serif;
+      font-size: clamp(1.75rem, 5vw, 2.75rem);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+    }
+    .ph-display {
+      font-size: 0.85rem;
+      color: var(--gold);
+      font-style: italic;
+      margin-top: 0.2rem;
+      margin-bottom: 1rem;
+    }
+    .ph-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: clamp(1rem, 3vw, 2rem);
+    }
+    .ph-stat .v {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .ph-stat .l {
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+    }
+    .title-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.9rem;
+    }
+    .title-badge {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 1px;
+      background: var(--gold);
+      color: var(--bg);
+      padding: 0.22rem 0.6rem;
+      font-weight: 700;
+    }
+    .notitle-badge {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 1px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.22rem 0.6rem;
+    }
+
+    /* ── ARENA BANNERS ── */
+    .arena-wrap {
+      margin-bottom: 1.75rem;
+    }
+    .arena-label {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.62rem;
+      letter-spacing: 3px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 0.65rem;
+    }
+    .arena-banners {
+      display: flex;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+      padding: 1.25rem 1.25rem 1.5rem;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--purple);
+      align-items: flex-start;
+    }
+    .banner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      width: 66px;
+      min-height: 92px;
+      padding: 0.6rem 0.25rem 1.1rem;
+      position: relative;
+      clip-path: polygon(0 0, 100% 0, 100% 78%, 50% 100%, 0 78%);
+      text-align: center;
+    }
+    .banner::before {
+      content: '';
+      position: absolute;
+      top: -3px; left: 50%; transform: translateX(-50%);
+      width: 8px; height: 5px;
+      background: rgba(160,150,170,0.5);
+      clip-path: polygon(15% 0, 85% 0, 100% 100%, 0 100%);
+    }
+    .b-champ {
+      background: linear-gradient(180deg, var(--gold) 0%, #c49a00 100%);
+    }
+    .b-champ .b-yr, .b-champ .b-txt, .b-champ .b-rec { color: #1a1000; }
+    .b-win {
+      background: linear-gradient(180deg, #1a4a2e 0%, #0d2a1a 100%);
+      border: 1px solid rgba(68,204,119,0.25);
+    }
+    .b-playoff {
+      background: linear-gradient(180deg, #1d3a5c 0%, #0d1f3a 100%);
+      border: 1px solid rgba(79,38,131,0.6);
+    }
+    .b-loss {
+      background: linear-gradient(180deg, #4a1a1a 0%, #2a0d0d 100%);
+      border: 1px solid rgba(255,68,68,0.25);
+    }
+    .b-yr {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .b-txt {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--text);
+      line-height: 1.2;
+      margin-top: 0.2rem;
+    }
+    .b-rec {
+      font-size: 0.56rem;
+      color: var(--text-muted);
+      margin-top: 0.1rem;
+      line-height: 1;
+    }
+
+    /* ── STORY ── */
+    .story-block {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 4px solid var(--purple-light);
+      padding: 1.5rem 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .block-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 3px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 0.9rem;
+    }
+    .story-text { font-size: 0.9rem; line-height: 1.78; color: var(--text); }
+    .story-text p + p { margin-top: 0.8rem; }
+
+    /* ── SEASON TABLE ── */
+    .season-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    .season-table th {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.63rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-align: left;
+      padding: 0.6rem 0.5rem;
+      border-bottom: 2px solid var(--purple);
+    }
+    .season-table td {
+      padding: 0.55rem 0.5rem;
+      border-bottom: 1px solid rgba(79,38,131,0.15);
+      color: var(--text);
+    }
+    .season-table tr:hover td { background: var(--gold-soft); }
+    .season-table .yr {
+      font-family: 'Oswald', sans-serif;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .season-table .champ-row td { background: rgba(255,198,47,0.04); }
+    .win-rec { color: var(--green); font-family: 'Oswald', sans-serif; letter-spacing: 0.5px; }
+    .loss-rec { color: var(--red); font-family: 'Oswald', sans-serif; letter-spacing: 0.5px; }
+    .even-rec { color: var(--text-muted); font-family: 'Oswald', sans-serif; letter-spacing: 0.5px; }
+
+    /* ── QUICK STATS ── */
+    .qs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 0.65rem;
+      margin-bottom: 1.5rem;
+    }
+    .qs-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 0.85rem;
+      text-align: center;
+      clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 7px 100%, 0 calc(100% - 7px));
+    }
+    .qs-val {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .qs-lbl {
+      font-size: 0.6rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    /* ── RIVAL ── */
+    .rival-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--red);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2rem;
+    }
+    .rival-lbl {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.63rem;
+      letter-spacing: 3px;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+    .rival-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .rival-desc { font-size: 0.82rem; color: var(--text-muted); margin-top: 0.35rem; line-height: 1.6; }
+
+    .blk-hdr {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.35rem;
+      border-bottom: 1px solid var(--border-gold);
+    }
+    .mb15 { margin-bottom: 1.5rem; }
+  </style>
 </head>
 <body>
 
@@ -18,7 +333,7 @@
       <a href="teams.html" class="active">Teams</a>
       <a href="history.html">History</a>
       <a href="reset.html">The Reset</a>
-        <a href="awards.html">Awards</a>
+      <a href="awards.html">Awards</a>
       <a href="analytics.html">Analytics</a>
       <a href="draft.html">Draft</a>
     </div>
@@ -29,85 +344,655 @@
   <img src="https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=1200&q=80" alt="">
   <div class="section-divider-overlay">
     <div class="num">08</div>
-    <h2>The Roster</h2>
+    <h2>Team Profiles</h2>
   </div>
 </div>
 
-<section class="section">
-  <h2 class="section-title">All Teams</h2>
-  <p class="section-sub">2025 Season Records · Sorted by Finish</p>
+<section class="section" style="max-width:1000px;">
+  <h2 class="section-title">Team Profiles</h2>
+  <p class="section-sub">Select a team · Full dynasty stories · 3 seasons of history</p>
 
-  <div class="team-grid">
-
-    <div class="team-card">
-      <div style="font-size:1.5rem;margin-bottom:0.25rem;">🏆</div>
-      <div class="owner">arwandl3r</div>
-      <div class="team-label">2025 Champion</div>
-      <div class="record-line">22 – 6</div>
-      <div class="pts">2,886.96 PF · 2,597.02 PA</div>
-      <div style="margin-top:0.5rem;font-size:0.75rem;color:var(--text-muted);">All-Time: 60-24 · 1 Title (2025)</div>
+  <!-- SELECTOR -->
+  <div class="team-selector">
+    <div class="selector-label">Select Team</div>
+    <div class="team-buttons">
+      <button class="team-btn active" onclick="showTeam('coalj', this)">coalj</button>
+      <button class="team-btn" onclick="showTeam('arwandl3r', this)">arwandl3r</button>
+      <button class="team-btn" onclick="showTeam('rbenson4', this)">rbenson4 &amp; GMadison</button>
+      <button class="team-btn" onclick="showTeam('carrot', this)">UpcomingCarrot25</button>
+      <button class="team-btn" onclick="showTeam('drake', this)">DrakeEvers</button>
+      <button class="team-btn" onclick="showTeam('plund', this)">plund3342</button>
+      <button class="team-btn" onclick="showTeam('werni', this)">DaWerni98</button>
+      <button class="team-btn" onclick="showTeam('cadester', this)">TheCadester</button>
     </div>
-
-    <div class="team-card">
-      <div class="owner">rbenson4 & GMadison</div>
-      <div class="team-label">Co-owned</div>
-      <div class="record-line">20 – 8</div>
-      <div class="pts">3,122.26 PF · 2,778.66 PA</div>
-      <div style="margin-top:0.5rem;font-size:0.75rem;color:var(--text-muted);">All-Time: 59-25 · Most PF in 2025</div>
-    </div>
-
-    <div class="team-card">
-      <div class="owner">UpcomingCarrot25</div>
-      <div class="team-label">&nbsp;</div>
-      <div class="record-line">17 – 11</div>
-      <div class="pts">2,778.02 PF · 2,718.72 PA</div>
-      <div style="margin-top:0.5rem;font-size:0.75rem;color:var(--text-muted);">All-Time: 45-39</div>
-    </div>
-
-    <div class="team-card">
-      <div class="owner">plund3342</div>
-      <div class="team-label">LaPorta Potty</div>
-      <div class="record-line">15 – 13</div>
-      <div class="pts">2,918.34 PF · 2,849.86 PA</div>
-      <div style="margin-top:0.5rem;font-size:0.75rem;color:var(--text-muted);">All-Time: 29-55 · Bounce-back year</div>
-    </div>
-
-    <div class="team-card">
-      <div class="owner">coalj</div>
-      <div class="team-label">Cole · Co-Commissioner</div>
-      <div class="record-line">13 – 15</div>
-      <div class="pts">2,640.74 PF · 2,571.04 PA</div>
-      <div style="margin-top:0.5rem;font-size:0.75rem;color:var(--text-muted);">All-Time: 61-23 · 2x Champion (2023, 2024)</div>
-    </div>
-
-    <div class="team-card">
-      <div class="owner">TheCadester</div>
-      <div class="team-label">Joined 2025</div>
-      <div class="record-line">10 – 18</div>
-      <div class="pts">2,600.34 PF · 2,761.76 PA</div>
-      <div style="margin-top:0.5rem;font-size:0.75rem;color:var(--text-muted);">Rookie season</div>
-    </div>
-
-    <div class="team-card">
-      <div class="owner">DaWerni98</div>
-      <div class="team-label">Tua YouturnedtheBallOva</div>
-      <div class="record-line">9 – 19</div>
-      <div class="pts">2,504.98 PF · 2,770.12 PA</div>
-      <div style="margin-top:0.5rem;font-size:0.75rem;color:var(--text-muted);">All-Time: 22-62</div>
-    </div>
-
-    <div class="team-card">
-      <div class="owner">DrakeEvers</div>
-      <div class="team-label">Drake · Co-Commissioner</div>
-      <div class="record-line">6 – 22</div>
-      <div class="pts">2,332.72 PF · 2,737.18 PA</div>
-      <div style="margin-top:0.5rem;font-size:0.75rem;color:var(--text-muted);">All-Time: 30-54</div>
-    </div>
-
   </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       TEAM: coalj
+  ═══════════════════════════════════════════════════════ -->
+  <div id="profile-coalj" class="team-profile active">
+    <div class="profile-header">
+      <div class="ph-inner">
+        <div class="ph-emoji">🏆🏆</div>
+        <div class="ph-owner">coalj</div>
+        <div class="ph-display">Cole · Co-Commissioner</div>
+        <div class="ph-stats">
+          <div class="ph-stat"><div class="v">61-23</div><div class="l">All-Time Record</div></div>
+          <div class="ph-stat"><div class="v">72.6%</div><div class="l">Win Rate</div></div>
+          <div class="ph-stat"><div class="v">8,882.10</div><div class="l">Career PF</div></div>
+          <div class="ph-stat"><div class="v">2</div><div class="l">Championships</div></div>
+        </div>
+        <div class="title-badges">
+          <div class="title-badge">🏆 2023 Champion</div>
+          <div class="title-badge">🏆 2024 Champion</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arena-wrap">
+      <div class="arena-label">Arena Banners</div>
+      <div class="arena-banners">
+        <div class="banner b-champ"><div class="b-yr">2023</div><div class="b-txt">CHAMP</div><div class="b-rec">24-4</div></div>
+        <div class="banner b-champ"><div class="b-yr">2024</div><div class="b-txt">CHAMP</div><div class="b-rec">24-4</div></div>
+        <div class="banner b-playoff"><div class="b-yr">2023</div><div class="b-txt">PLAYOFF</div><div class="b-rec">WINNER</div></div>
+        <div class="banner b-playoff"><div class="b-yr">2024</div><div class="b-txt">PLAYOFF</div><div class="b-rec">WINNER</div></div>
+        <div class="banner b-win"><div class="b-yr">2023</div><div class="b-txt">SEASON</div><div class="b-rec">24-4</div></div>
+        <div class="banner b-win"><div class="b-yr">2024</div><div class="b-txt">SEASON</div><div class="b-rec">24-4</div></div>
+        <div class="banner b-loss"><div class="b-yr">2025</div><div class="b-txt">SEASON</div><div class="b-rec">13-15</div></div>
+      </div>
+    </div>
+
+    <div class="story-block">
+      <div class="block-title">⚔️ The Dynasty Story</div>
+      <div class="story-text">
+        <p>Nobody came close. Back-to-back 24-4 seasons. Two championship trophies. Cole didn't just win this league — he dominated it with a ferocity that made it feel unsportsmanlike. In a league built for chaos, he was the order. The benchmark everyone else measured themselves against, the man who turned fantasy football into a one-team demonstration of what happens when you combine elite roster management with ruthless execution.</p>
+        <p>Then he triggered the clause. His own back-to-back championship made every team eligible for a reset — and made his reset mandatory. The roster that made him untouchable? Gone. Redistributed. The dynasty ended not by a rival, but by the rules of his own making. He went from 24-4 to 13-15 in one offseason — the sharpest drop in league history. The co-commissioner watched his empire dissolve while the league he helped build moved on without him.</p>
+        <p>The question that keeps this league interesting: was it the players, or was it Cole? Two dominant seasons argues yes — but 13-15 post-reset plants doubt. The greatest manager in league history is now fighting to prove his dynasty wasn't just a roster. The rebuild starts now, and Cole doesn't know how to lose quietly.</p>
+      </div>
+    </div>
+
+    <div class="mb15">
+      <div class="blk-hdr">Season-by-Season</div>
+      <div style="overflow-x:auto;">
+        <table class="season-table">
+          <thead><tr><th>Season</th><th>Record</th><th>PF</th><th>PA</th><th>Finish</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr class="champ-row"><td class="yr">2023</td><td class="win-rec">24-4</td><td>3,166.76</td><td>—</td><td>🏆 1st</td><td>Inaugural Champion · League Points Record</td></tr>
+            <tr class="champ-row"><td class="yr">2024</td><td class="win-rec">24-4</td><td>3,074.60</td><td>—</td><td>🏆 1st</td><td>Back-to-Back · Triggered Reset Rule</td></tr>
+            <tr><td class="yr">2025</td><td class="loss-rec">13-15</td><td>2,640.74</td><td>2,571.04</td><td>5th</td><td>Mandatory Reset · Roster stripped</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="blk-hdr">Quick Stats</div>
+    <div class="qs-grid mb15">
+      <div class="qs-card"><div class="qs-val">61-23</div><div class="qs-lbl">All-Time Record</div></div>
+      <div class="qs-card"><div class="qs-val">72.6%</div><div class="qs-lbl">Win Rate</div></div>
+      <div class="qs-card"><div class="qs-val">8,882.10</div><div class="qs-lbl">Career PF</div></div>
+      <div class="qs-card"><div class="qs-val">2</div><div class="qs-lbl">Championships</div></div>
+      <div class="qs-card"><div class="qs-val">0</div><div class="qs-lbl">Career Trades</div></div>
+      <div class="qs-card"><div class="qs-val">TBD</div><div class="qs-lbl">Best Single Week</div></div>
+    </div>
+
+    <div class="rival-card">
+      <div class="rival-lbl">⚔️ Biggest Rival</div>
+      <div class="rival-name">arwandl3r</div>
+      <div class="rival-desc">The king and the usurper. coalj built the dynasty; arwandl3r tore it down. Steady, patient, and relentless — arwandl3r climbed the standings every year while coalj dominated, then seized the throne the moment the Reset cleared the board. The rivalry that defines this league's first chapter.</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       TEAM: arwandl3r
+  ═══════════════════════════════════════════════════════ -->
+  <div id="profile-arwandl3r" class="team-profile">
+    <div class="profile-header">
+      <div class="ph-inner">
+        <div class="ph-emoji">👑</div>
+        <div class="ph-owner">arwandl3r</div>
+        <div class="ph-display">The New King</div>
+        <div class="ph-stats">
+          <div class="ph-stat"><div class="v">60-24</div><div class="l">All-Time Record</div></div>
+          <div class="ph-stat"><div class="v">71.4%</div><div class="l">Win Rate</div></div>
+          <div class="ph-stat"><div class="v">2,886.96</div><div class="l">2025 PF</div></div>
+          <div class="ph-stat"><div class="v">1</div><div class="l">Championship</div></div>
+        </div>
+        <div class="title-badges">
+          <div class="title-badge">🏆 2025 Champion</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arena-wrap">
+      <div class="arena-label">Arena Banners</div>
+      <div class="arena-banners">
+        <div class="banner b-champ"><div class="b-yr">2025</div><div class="b-txt">CHAMP</div><div class="b-rec">22-6</div></div>
+        <div class="banner b-playoff"><div class="b-yr">2023</div><div class="b-txt">PLAYOFF</div><div class="b-rec">BERTH</div></div>
+        <div class="banner b-playoff"><div class="b-yr">2024</div><div class="b-txt">PLAYOFF</div><div class="b-rec">BERTH</div></div>
+        <div class="banner b-playoff"><div class="b-yr">2025</div><div class="b-txt">PLAYOFF</div><div class="b-rec">WINNER</div></div>
+        <div class="banner b-win"><div class="b-yr">2023</div><div class="b-txt">SEASON</div><div class="b-rec">17-11</div></div>
+        <div class="banner b-win"><div class="b-yr">2024</div><div class="b-txt">SEASON</div><div class="b-rec">21-7</div></div>
+        <div class="banner b-win"><div class="b-yr">2025</div><div class="b-txt">SEASON</div><div class="b-rec">22-6</div></div>
+      </div>
+    </div>
+
+    <div class="story-block">
+      <div class="block-title">⚔️ The Dynasty Story</div>
+      <div class="story-text">
+        <p>There was no flash. No headline-grabbing trade. No lottery-pick luck story. Just steady, relentless upward movement — 17 wins, then 21, then 22 and a championship ring. arwandl3r is the kind of manager that wins you doubt from the outside and inspires quiet dread from within the league. Three years in, three winning seasons, one title, and a trajectory that points nowhere but up.</p>
+        <p>The Dynasty Reset was the moment that separated the patient from the panicked. When coalj's back-to-back triggered the optional redraft, arwandl3r held firm. Kept the roster. Trusted the process. While others gambled on a fresh start, arwandl3r bet on what they had built — and went 22-6 to claim the 2025 championship. Patience, validated in the most public way possible.</p>
+        <p>The new king wears the crown, but the league is coming. coalj wants it back. rbenson4 & GMadison have been knocking at the door for three seasons. arwandl3r has been the right answer every year so far — the question now is whether the dynasty is just beginning, or whether the rest of the league finally figures out how to stop the machine.</p>
+      </div>
+    </div>
+
+    <div class="mb15">
+      <div class="blk-hdr">Season-by-Season</div>
+      <div style="overflow-x:auto;">
+        <table class="season-table">
+          <thead><tr><th>Season</th><th>Record</th><th>PF</th><th>PA</th><th>Finish</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td class="yr">2023</td><td class="win-rec">17-11</td><td>—</td><td>—</td><td>3rd</td><td>Inaugural season · Playoff berth</td></tr>
+            <tr><td class="yr">2024</td><td class="win-rec">21-7</td><td>—</td><td>—</td><td>2nd</td><td>Kept roster through Reset eligibility</td></tr>
+            <tr class="champ-row"><td class="yr">2025</td><td class="win-rec">22-6</td><td>2,886.96</td><td>2,597.02</td><td>🏆 1st</td><td>Champion · Held roster through Reset</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="blk-hdr">Quick Stats</div>
+    <div class="qs-grid mb15">
+      <div class="qs-card"><div class="qs-val">60-24</div><div class="qs-lbl">All-Time Record</div></div>
+      <div class="qs-card"><div class="qs-val">71.4%</div><div class="qs-lbl">Win Rate</div></div>
+      <div class="qs-card"><div class="qs-val">2,886.96</div><div class="qs-lbl">2025 PF</div></div>
+      <div class="qs-card"><div class="qs-val">1</div><div class="qs-lbl">Championship</div></div>
+      <div class="qs-card"><div class="qs-val">0</div><div class="qs-lbl">Career Trades</div></div>
+      <div class="qs-card"><div class="qs-val">TBD</div><div class="qs-lbl">Best Single Week</div></div>
+    </div>
+
+    <div class="rival-card">
+      <div class="rival-lbl">⚔️ Biggest Rival</div>
+      <div class="rival-name">coalj</div>
+      <div class="rival-desc">The dynasty that arwandl3r had to outlast. Two years of watching coalj dominate, waiting for the moment the empire would crack. The Reset delivered the opportunity, and arwandl3r didn't waste it. The rivalry between the dethroned king and the new champion is this league's defining storyline.</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       TEAM: rbenson4 & GMadison
+  ═══════════════════════════════════════════════════════ -->
+  <div id="profile-rbenson4" class="team-profile">
+    <div class="profile-header">
+      <div class="ph-inner">
+        <div class="ph-emoji">💍</div>
+        <div class="ph-owner">rbenson4 &amp; GMadison</div>
+        <div class="ph-display">Co-Owned · The Juggernaut Without a Ring</div>
+        <div class="ph-stats">
+          <div class="ph-stat"><div class="v">59-25</div><div class="l">All-Time Record</div></div>
+          <div class="ph-stat"><div class="v">70.2%</div><div class="l">Win Rate</div></div>
+          <div class="ph-stat"><div class="v">3,122.26</div><div class="l">2025 PF (League High)</div></div>
+          <div class="ph-stat"><div class="v">0</div><div class="l">Championships</div></div>
+        </div>
+        <div class="title-badges">
+          <div class="notitle-badge">20-8 · 2023</div>
+          <div class="notitle-badge">19-9 · 2024</div>
+          <div class="notitle-badge">20-8 · 2025</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arena-wrap">
+      <div class="arena-label">Arena Banners</div>
+      <div class="arena-banners">
+        <div class="banner b-playoff"><div class="b-yr">2023</div><div class="b-txt">PLAYOFF</div><div class="b-rec">BERTH</div></div>
+        <div class="banner b-playoff"><div class="b-yr">2024</div><div class="b-txt">PLAYOFF</div><div class="b-rec">BERTH</div></div>
+        <div class="banner b-playoff"><div class="b-yr">2025</div><div class="b-txt">PLAYOFF</div><div class="b-rec">BERTH</div></div>
+        <div class="banner b-win"><div class="b-yr">2023</div><div class="b-txt">SEASON</div><div class="b-rec">20-8</div></div>
+        <div class="banner b-win"><div class="b-yr">2024</div><div class="b-txt">SEASON</div><div class="b-rec">19-9</div></div>
+        <div class="banner b-win"><div class="b-yr">2025</div><div class="b-txt">SEASON</div><div class="b-rec">20-8</div></div>
+        <div class="banner b-win" style="background:linear-gradient(180deg,#1d3a5c,#0d1f3a);border:1px solid rgba(255,198,47,0.3);">
+          <div class="b-yr" style="color:var(--gold);">2025</div>
+          <div class="b-txt" style="color:var(--gold);">PTS KING</div>
+          <div class="b-rec" style="color:var(--gold-dark);">3,122</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="story-block">
+      <div class="block-title">⚔️ The Dynasty Story</div>
+      <div class="story-text">
+        <p>Three seasons. Three winning records. Never below 19 wins. The league's most consistent team — a co-managed operation that has quietly assembled one of the best sustained performances in this league's short history. 59-25 all-time and a 70.2% win rate that most solo managers would kill for. There's genuine talent here, genuine depth, genuine management.</p>
+        <p>But there's no ring. And that's the sentence that defines this team. The highest PF in 2025 with 3,122.26 — more points scored than the eventual champion — and still no title. The points are there. The consistency is there. Whatever happens in the moments that matter most, rbenson4 & GMadison have yet to solve it. The cruel math of dynasty fantasy: you can do everything right and still watch someone else hoist the trophy.</p>
+        <p>This team isn't declining. It isn't in trouble. It just hasn't closed. One of these years, the regular season success converts — and when it does, this league will have a new dynasty on its hands. The bridesmaid has been patient. The patience is running out.</p>
+      </div>
+    </div>
+
+    <div class="mb15">
+      <div class="blk-hdr">Season-by-Season</div>
+      <div style="overflow-x:auto;">
+        <table class="season-table">
+          <thead><tr><th>Season</th><th>Record</th><th>PF</th><th>PA</th><th>Finish</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td class="yr">2023</td><td class="win-rec">20-8</td><td>—</td><td>—</td><td>2nd</td><td>Inaugural season · Playoff berth</td></tr>
+            <tr><td class="yr">2024</td><td class="win-rec">19-9</td><td>—</td><td>—</td><td>3rd</td><td>Never below .500 · Kept roster</td></tr>
+            <tr><td class="yr">2025</td><td class="win-rec">20-8</td><td>3,122.26</td><td>2,778.66</td><td>2nd</td><td>Highest PF in league · No title</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="blk-hdr">Quick Stats</div>
+    <div class="qs-grid mb15">
+      <div class="qs-card"><div class="qs-val">59-25</div><div class="qs-lbl">All-Time Record</div></div>
+      <div class="qs-card"><div class="qs-val">70.2%</div><div class="qs-lbl">Win Rate</div></div>
+      <div class="qs-card"><div class="qs-val">3,122.26</div><div class="qs-lbl">2025 PF (High)</div></div>
+      <div class="qs-card"><div class="qs-val">0</div><div class="qs-lbl">Championships</div></div>
+      <div class="qs-card"><div class="qs-val">0</div><div class="qs-lbl">Career Trades</div></div>
+      <div class="qs-card"><div class="qs-val">TBD</div><div class="qs-lbl">Best Single Week</div></div>
+    </div>
+
+    <div class="rival-card">
+      <div class="rival-lbl">⚔️ Biggest Rival</div>
+      <div class="rival-name">arwandl3r</div>
+      <div class="rival-desc">The champion that rbenson4 & GMadison couldn't catch. More points scored in 2025, better regular season record — and still watching arwandl3r take home the trophy. The best team to never win it all versus the team that found a way when it mattered. The most frustrating rivalry in the league.</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       TEAM: UpcomingCarrot25
+  ═══════════════════════════════════════════════════════ -->
+  <div id="profile-carrot" class="team-profile">
+    <div class="profile-header">
+      <div class="ph-inner">
+        <div class="ph-emoji">📈</div>
+        <div class="ph-owner">UpcomingCarrot25</div>
+        <div class="ph-display">The Quiet Contender</div>
+        <div class="ph-stats">
+          <div class="ph-stat"><div class="v">45-39</div><div class="l">All-Time Record</div></div>
+          <div class="ph-stat"><div class="v">53.6%</div><div class="l">Win Rate</div></div>
+          <div class="ph-stat"><div class="v">2,778.02</div><div class="l">2025 PF</div></div>
+          <div class="ph-stat"><div class="v">0</div><div class="l">Championships</div></div>
+        </div>
+        <div class="title-badges">
+          <div class="notitle-badge">9-19 → 19-9 → 17-11</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arena-wrap">
+      <div class="arena-label">Arena Banners</div>
+      <div class="arena-banners">
+        <div class="banner b-playoff"><div class="b-yr">2024</div><div class="b-txt">PLAYOFF</div><div class="b-rec">BERTH</div></div>
+        <div class="banner b-playoff"><div class="b-yr">2025</div><div class="b-txt">PLAYOFF</div><div class="b-rec">BERTH</div></div>
+        <div class="banner b-loss"><div class="b-yr">2023</div><div class="b-txt">SEASON</div><div class="b-rec">9-19</div></div>
+        <div class="banner b-win"><div class="b-yr">2024</div><div class="b-txt">SEASON</div><div class="b-rec">19-9</div></div>
+        <div class="banner b-win"><div class="b-yr">2025</div><div class="b-txt">SEASON</div><div class="b-rec">17-11</div></div>
+        <div class="banner b-win" style="background:linear-gradient(180deg,#2a4a1d,#142a0d);border:1px solid rgba(68,204,119,0.3);">
+          <div class="b-yr" style="color:var(--green);">2024</div>
+          <div class="b-txt" style="color:var(--green);">+10 WIN</div>
+          <div class="b-rec" style="color:rgba(68,204,119,0.6);">IMPROVE</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="story-block">
+      <div class="block-title">⚔️ The Dynasty Story</div>
+      <div class="story-text">
+        <p>UpcomingCarrot25 came into this league with a rough first year — 9-19, bottom of the pack, learning what dynasty football actually demands. Most managers at that position panic, blow things up, and start making desperate moves. Not this team. They held the roster, trusted the process, and came back in 2024 with a 19-9 record and a playoff berth. Ten more wins in a single season. That's not luck. That's development.</p>
+        <p>When the Dynasty Reset came around, UpcomingCarrot25 held again. Chose not to gamble on a fresh start. Came back in 2025 at 17-11 — not as explosive as the previous year, but still a winning season, still a playoff contender, still one of the top teams in the league. Three seasons in, the trajectory reads like a team figuring out exactly what they are: built, not bought.</p>
+        <p>The next chapter is the most interesting. The first years were the climb. The title window is now. With rbenson4 and arwandl3r still standing in the way, UpcomingCarrot25 will need to take the leap from consistent contender to champion. The carrot keeps getting closer.</p>
+      </div>
+    </div>
+
+    <div class="mb15">
+      <div class="blk-hdr">Season-by-Season</div>
+      <div style="overflow-x:auto;">
+        <table class="season-table">
+          <thead><tr><th>Season</th><th>Record</th><th>PF</th><th>PA</th><th>Finish</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td class="yr">2023</td><td class="loss-rec">9-19</td><td>—</td><td>—</td><td>5th</td><td>Inaugural season · Rebuilding year</td></tr>
+            <tr><td class="yr">2024</td><td class="win-rec">19-9</td><td>—</td><td>—</td><td>3rd</td><td>+10 wins · Kept roster · Most Improved</td></tr>
+            <tr><td class="yr">2025</td><td class="win-rec">17-11</td><td>2,778.02</td><td>2,718.72</td><td>3rd</td><td>Kept roster through Reset · Playoff berth</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="blk-hdr">Quick Stats</div>
+    <div class="qs-grid mb15">
+      <div class="qs-card"><div class="qs-val">45-39</div><div class="qs-lbl">All-Time Record</div></div>
+      <div class="qs-card"><div class="qs-val">53.6%</div><div class="qs-lbl">Win Rate</div></div>
+      <div class="qs-card"><div class="qs-val">2,778.02</div><div class="qs-lbl">2025 PF</div></div>
+      <div class="qs-card"><div class="qs-val">0</div><div class="qs-lbl">Championships</div></div>
+      <div class="qs-card"><div class="qs-val">0</div><div class="qs-lbl">Career Trades</div></div>
+      <div class="qs-card"><div class="qs-val">TBD</div><div class="qs-lbl">Best Single Week</div></div>
+    </div>
+
+    <div class="rival-card">
+      <div class="rival-lbl">⚔️ Biggest Rival</div>
+      <div class="rival-name">rbenson4 &amp; GMadison</div>
+      <div class="rival-desc">Two teams with similar trajectories fighting for the same playoff real estate. rbenson4 has the better record and the bigger point totals — but UpcomingCarrot25 is closing the gap. The battle for the #2 spot behind arwandl3r is where this rivalry lives, and it's heating up every season.</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       TEAM: DrakeEvers
+  ═══════════════════════════════════════════════════════ -->
+  <div id="profile-drake" class="team-profile">
+    <div class="profile-header">
+      <div class="ph-inner">
+        <div class="ph-emoji">📉</div>
+        <div class="ph-owner">DrakeEvers</div>
+        <div class="ph-display">Drake · Co-Commissioner · The Loyalist</div>
+        <div class="ph-stats">
+          <div class="ph-stat"><div class="v">30-54</div><div class="l">All-Time Record</div></div>
+          <div class="ph-stat"><div class="v">35.7%</div><div class="l">Win Rate</div></div>
+          <div class="ph-stat"><div class="v">2,332.72</div><div class="l">2025 PF</div></div>
+          <div class="ph-stat"><div class="v">0</div><div class="l">Championships</div></div>
+        </div>
+        <div class="title-badges">
+          <div class="notitle-badge">12-16 → 12-16 → 6-22</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arena-wrap">
+      <div class="arena-label">Arena Banners</div>
+      <div class="arena-banners">
+        <div class="banner b-loss"><div class="b-yr">2023</div><div class="b-txt">SEASON</div><div class="b-rec">12-16</div></div>
+        <div class="banner b-loss"><div class="b-yr">2024</div><div class="b-txt">SEASON</div><div class="b-rec">12-16</div></div>
+        <div class="banner b-loss"><div class="b-yr">2025</div><div class="b-txt">SEASON</div><div class="b-rec">6-22</div></div>
+        <div class="banner b-loss" style="background:linear-gradient(180deg,#4a1a1a,#2a0d0d);border:1px solid rgba(255,68,68,0.3);">
+          <div class="b-yr" style="color:var(--red);">2025</div>
+          <div class="b-txt" style="color:var(--red);">TOILET</div>
+          <div class="b-rec" style="color:rgba(255,68,68,0.6);">BOWL</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="story-block">
+      <div class="block-title">⚔️ The Dynasty Story</div>
+      <div class="story-text">
+        <p>You can't fault the loyalty. When the Dynasty Reset option came around, DrakeEvers — one of the league's own co-commissioners — chose to stand pat. Kept the roster. Believed in the squad. 12-16, 12-16 — not great, but not embarrassing. A team going nowhere fast but at least going there with confidence. Sometimes loyalty is a value in itself.</p>
+        <p>Then 2025 happened. 6-22. Last place. Toilet Bowl. The same roster that went 12-16 twice fell completely off a cliff, finishing 24 games below .500 in a season that offered no bright spots. The trajectory that was flat suddenly became a steep decline. The co-commissioner who helped build this league is now the cautionary tale it tells about roster loyalty in a dynasty format.</p>
+        <p>Something has to change. Whether that's trades, better waiver moves, or a complete philosophical reset in how the roster is managed, DrakeEvers is at a crossroads. The foundation of a dynasty isn't loyalty to what you have — it's the willingness to upgrade when you need to. The rebuild is now unavoidable.</p>
+      </div>
+    </div>
+
+    <div class="mb15">
+      <div class="blk-hdr">Season-by-Season</div>
+      <div style="overflow-x:auto;">
+        <table class="season-table">
+          <thead><tr><th>Season</th><th>Record</th><th>PF</th><th>PA</th><th>Finish</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td class="yr">2023</td><td class="loss-rec">12-16</td><td>—</td><td>—</td><td>4th</td><td>Inaugural season · Kept roster for reset</td></tr>
+            <tr><td class="yr">2024</td><td class="loss-rec">12-16</td><td>—</td><td>—</td><td>5th</td><td>Identical record year-over-year</td></tr>
+            <tr><td class="yr">2025</td><td class="loss-rec">6-22</td><td>2,332.72</td><td>2,737.18</td><td>8th 💀</td><td>Lowest PF in league · Toilet Bowl</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="blk-hdr">Quick Stats</div>
+    <div class="qs-grid mb15">
+      <div class="qs-card"><div class="qs-val">30-54</div><div class="qs-lbl">All-Time Record</div></div>
+      <div class="qs-card"><div class="qs-val">35.7%</div><div class="qs-lbl">Win Rate</div></div>
+      <div class="qs-card"><div class="qs-val">2,332.72</div><div class="qs-lbl">2025 PF (Low)</div></div>
+      <div class="qs-card"><div class="qs-val">0</div><div class="qs-lbl">Championships</div></div>
+      <div class="qs-card"><div class="qs-val">0</div><div class="qs-lbl">Career Trades</div></div>
+      <div class="qs-card"><div class="qs-val">TBD</div><div class="qs-lbl">Best Single Week</div></div>
+    </div>
+
+    <div class="rival-card">
+      <div class="rival-lbl">⚔️ Biggest Rival</div>
+      <div class="rival-name">DaWerni98</div>
+      <div class="rival-desc">The two teams that have spent the most time near the bottom of the standings. For a while DrakeEvers had the edge — but after the 2025 collapse, DaWerni98 is suddenly looking down on them. When you're competing for last, that's its own kind of rivalry.</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       TEAM: plund3342
+  ═══════════════════════════════════════════════════════ -->
+  <div id="profile-plund" class="team-profile">
+    <div class="profile-header">
+      <div class="ph-inner">
+        <div class="ph-emoji">🔥</div>
+        <div class="ph-owner">plund3342</div>
+        <div class="ph-display">LaPorta Potty · The Comeback Story</div>
+        <div class="ph-stats">
+          <div class="ph-stat"><div class="v">29-55</div><div class="l">All-Time Record</div></div>
+          <div class="ph-stat"><div class="v">34.5%</div><div class="l">Win Rate</div></div>
+          <div class="ph-stat"><div class="v">2,918.34</div><div class="l">2025 PF</div></div>
+          <div class="ph-stat"><div class="v">0</div><div class="l">Championships</div></div>
+        </div>
+        <div class="title-badges">
+          <div class="notitle-badge">5-23 → 15-13 · +10 WINS</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arena-wrap">
+      <div class="arena-label">Arena Banners</div>
+      <div class="arena-banners">
+        <div class="banner b-loss"><div class="b-yr">2023</div><div class="b-txt">SEASON</div><div class="b-rec">9-19</div></div>
+        <div class="banner b-loss"><div class="b-yr">2024</div><div class="b-txt">SEASON</div><div class="b-rec">5-23</div></div>
+        <div class="banner b-win"><div class="b-yr">2025</div><div class="b-txt">SEASON</div><div class="b-rec">15-13</div></div>
+        <div class="banner b-win" style="background:linear-gradient(180deg,#2a4a1d,#142a0d);border:1px solid rgba(68,204,119,0.4);">
+          <div class="b-yr" style="color:var(--green);">2025</div>
+          <div class="b-txt" style="color:var(--green);">+10 WIN</div>
+          <div class="b-rec" style="color:rgba(68,204,119,0.6);">TURNAROUND</div>
+        </div>
+        <div class="banner b-win" style="background:linear-gradient(180deg,#2a4a1d,#142a0d);border:1px solid rgba(68,204,119,0.4);">
+          <div class="b-yr" style="color:var(--green);">2025</div>
+          <div class="b-txt" style="color:var(--green);">RESET</div>
+          <div class="b-rec" style="color:rgba(68,204,119,0.6);">MVP</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="story-block">
+      <div class="block-title">⚔️ The Dynasty Story</div>
+      <div class="story-text">
+        <p>Dead last. 5-23 in 2024. Twenty-three losses in a single season. If you're being honest with yourself, that kind of year makes you question whether you belong in this league. plund3342 — playing under the banner of LaPorta Potty — had hit rock bottom, embarrassingly and publicly. The offseason after 2024 was a moment of reckoning: stay the course and accept mediocrity, or blow it all up and start fresh.</p>
+        <p>The answer was the Dynasty Reset. When coalj's back-to-back triggered the optional redraft, plund3342 jumped at it. New roster. New identity. New season. The reset wasn't a panic button — it was a surgical decision. And it worked: 15-13 in 2025, the biggest single-season turnaround in league history. Ten more wins. From last place to respectability in one offseason. LaPorta Potty isn't just a funny name anymore.</p>
+        <p>The foundation is now real. For the first time since joining this league, plund3342 is playing from a position of confidence rather than desperation. The reset gave this team a second life — and the early signs are that this time, it's being used correctly. The question isn't whether the comeback was real. The question is whether it was the beginning of something, or just one good year before gravity pulls it back down.</p>
+      </div>
+    </div>
+
+    <div class="mb15">
+      <div class="blk-hdr">Season-by-Season</div>
+      <div style="overflow-x:auto;">
+        <table class="season-table">
+          <thead><tr><th>Season</th><th>Record</th><th>PF</th><th>PA</th><th>Finish</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td class="yr">2023</td><td class="loss-rec">9-19</td><td>—</td><td>—</td><td>6th</td><td>Inaugural season · Struggling</td></tr>
+            <tr><td class="yr">2024</td><td class="loss-rec">5-23</td><td>—</td><td>—</td><td>7th 💀</td><td>Dead last · Worst record in league history</td></tr>
+            <tr><td class="yr">2025</td><td class="win-rec">15-13</td><td>2,918.34</td><td>2,849.86</td><td>4th</td><td>Dynasty Reset · +10 win turnaround · Reset MVP</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="blk-hdr">Quick Stats</div>
+    <div class="qs-grid mb15">
+      <div class="qs-card"><div class="qs-val">29-55</div><div class="qs-lbl">All-Time Record</div></div>
+      <div class="qs-card"><div class="qs-val">34.5%</div><div class="qs-lbl">Win Rate</div></div>
+      <div class="qs-card"><div class="qs-val">2,918.34</div><div class="qs-lbl">2025 PF</div></div>
+      <div class="qs-card"><div class="qs-val">0</div><div class="qs-lbl">Championships</div></div>
+      <div class="qs-card"><div class="qs-val">0</div><div class="qs-lbl">Career Trades</div></div>
+      <div class="qs-card"><div class="qs-val">TBD</div><div class="qs-lbl">Best Single Week</div></div>
+    </div>
+
+    <div class="rival-card">
+      <div class="rival-lbl">⚔️ Biggest Rival</div>
+      <div class="rival-name">DaWerni98</div>
+      <div class="rival-desc">They were in the same basement together — 9-19, 5-23, basement dwellers. But plund3342 opted into the Reset and came out 15-13 while DaWerni98 remains stuck at the bottom. The gap between them now tells the whole story of what the Reset could do for a team willing to take the leap.</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       TEAM: DaWerni98
+  ═══════════════════════════════════════════════════════ -->
+  <div id="profile-werni" class="team-profile">
+    <div class="profile-header">
+      <div class="ph-inner">
+        <div class="ph-emoji">🎢</div>
+        <div class="ph-owner">DaWerni98</div>
+        <div class="ph-display">Tua YouturnedtheBallOva · The Rebuild Continues</div>
+        <div class="ph-stats">
+          <div class="ph-stat"><div class="v">22-62</div><div class="l">All-Time Record</div></div>
+          <div class="ph-stat"><div class="v">26.2%</div><div class="l">Win Rate</div></div>
+          <div class="ph-stat"><div class="v">2,504.98</div><div class="l">2025 PF</div></div>
+          <div class="ph-stat"><div class="v">0</div><div class="l">Championships</div></div>
+        </div>
+        <div class="title-badges">
+          <div class="notitle-badge">9-19 → 4-24 → 9-19</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arena-wrap">
+      <div class="arena-label">Arena Banners</div>
+      <div class="arena-banners">
+        <div class="banner b-loss"><div class="b-yr">2023</div><div class="b-txt">SEASON</div><div class="b-rec">9-19</div></div>
+        <div class="banner b-loss"><div class="b-yr">2024</div><div class="b-txt">SEASON</div><div class="b-rec">4-24</div></div>
+        <div class="banner b-loss"><div class="b-yr">2025</div><div class="b-txt">SEASON</div><div class="b-rec">9-19</div></div>
+        <div class="banner b-loss" style="background:linear-gradient(180deg,#4a1a1a,#2a0d0d);">
+          <div class="b-yr" style="color:var(--red);">2024</div>
+          <div class="b-txt" style="color:var(--red);">TOILET</div>
+          <div class="b-rec" style="color:rgba(255,68,68,0.6);">BOWL</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="story-block">
+      <div class="block-title">⚔️ The Dynasty Story</div>
+      <div class="story-text">
+        <p>Tua YouturnedtheBallOva. The name was chosen with a certain chaotic energy, and the team has delivered on that promise with remarkable consistency. Three seasons, three losing records. 9-19, 4-24, 9-19. Consistently inconsistent in the most consistent way possible. This is the league's most volatile team — not because the wins and losses swing wildly, but because there's never a clear sign of whether things are improving or just fluctuating.</p>
+        <p>The Dynasty Reset was supposed to be the turning point. DaWerni98 opted in, embraced the fresh start, got a new roster. The 2024 4-24 campaign that drove the decision was rock bottom — surely the only way was up. And it was, technically: 9-19 in 2025 is better than 4-24. But 9-19 is still seventh place. The rebuild didn't relaunch the team — it returned them to exactly where they started in 2023. Like a video game that loops you back to level one.</p>
+        <p>The path forward exists, but it requires more than a roster reset — it requires a shift in how the team is managed. The talent has clearly been there enough to score points. The results haven't followed. Year four is the year DaWerni98 either breaks through or starts to define itself as a permanent cellar-dweller. The rebuild continues, whether they're ready to admit it or not.</p>
+      </div>
+    </div>
+
+    <div class="mb15">
+      <div class="blk-hdr">Season-by-Season</div>
+      <div style="overflow-x:auto;">
+        <table class="season-table">
+          <thead><tr><th>Season</th><th>Record</th><th>PF</th><th>PA</th><th>Finish</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td class="yr">2023</td><td class="loss-rec">9-19</td><td>—</td><td>—</td><td>6th</td><td>Inaugural season · Bottom tier</td></tr>
+            <tr><td class="yr">2024</td><td class="loss-rec">4-24</td><td>—</td><td>—</td><td>7th 💀</td><td>Toilet Bowl · Opted into Reset</td></tr>
+            <tr><td class="yr">2025</td><td class="loss-rec">9-19</td><td>2,504.98</td><td>2,770.12</td><td>7th</td><td>Post-Reset · Back to 2023 baseline</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="blk-hdr">Quick Stats</div>
+    <div class="qs-grid mb15">
+      <div class="qs-card"><div class="qs-val">22-62</div><div class="qs-lbl">All-Time Record</div></div>
+      <div class="qs-card"><div class="qs-val">26.2%</div><div class="qs-lbl">Win Rate</div></div>
+      <div class="qs-card"><div class="qs-val">2,504.98</div><div class="qs-lbl">2025 PF</div></div>
+      <div class="qs-card"><div class="qs-val">0</div><div class="qs-lbl">Championships</div></div>
+      <div class="qs-card"><div class="qs-val">0</div><div class="qs-lbl">Career Trades</div></div>
+      <div class="qs-card"><div class="qs-val">TBD</div><div class="qs-lbl">Best Single Week</div></div>
+    </div>
+
+    <div class="rival-card">
+      <div class="rival-lbl">⚔️ Biggest Rival</div>
+      <div class="rival-name">plund3342</div>
+      <div class="rival-desc">They were neighbors at the bottom of the standings. They both took the Reset. But plund3342 came out at 15-13 while DaWerni98 returned to 9-19. Same starting line. Very different outcomes. That gap is the rivalry — and it's the one DaWerni98 needs to close most urgently.</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       TEAM: TheCadester
+  ═══════════════════════════════════════════════════════ -->
+  <div id="profile-cadester" class="team-profile">
+    <div class="profile-header">
+      <div class="ph-inner">
+        <div class="ph-emoji">🌟</div>
+        <div class="ph-owner">TheCadester</div>
+        <div class="ph-display">The Rookie · Joined 2025 via Reset</div>
+        <div class="ph-stats">
+          <div class="ph-stat"><div class="v">10-18</div><div class="l">All-Time Record</div></div>
+          <div class="ph-stat"><div class="v">35.7%</div><div class="l">Win Rate</div></div>
+          <div class="ph-stat"><div class="v">2,600.34</div><div class="l">2025 PF</div></div>
+          <div class="ph-stat"><div class="v">0</div><div class="l">Championships</div></div>
+        </div>
+        <div class="title-badges">
+          <div class="notitle-badge">Rookie Season 2025</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arena-wrap">
+      <div class="arena-label">Arena Banners</div>
+      <div class="arena-banners">
+        <div class="banner b-loss"><div class="b-yr">2025</div><div class="b-txt">SEASON</div><div class="b-rec">10-18</div></div>
+        <div class="banner b-win" style="background:linear-gradient(180deg,#1d3a5c,#0d1f3a);border:1px solid rgba(79,38,131,0.6);">
+          <div class="b-yr" style="color:var(--gold);">2025</div>
+          <div class="b-txt" style="color:var(--text);">ROOKIE</div>
+          <div class="b-rec" style="color:var(--text-muted);">DEBUT</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="story-block">
+      <div class="block-title">⚔️ The Dynasty Story</div>
+      <div class="story-text">
+        <p>Every dynasty has a new arrival. TheCadester joined this league in 2025 through the Dynasty Reset — filling a spot opened up when the reset reshuffled the landscape. Coming into an established league cold, with a drafted roster and no history, is genuinely one of the harder things you can do in dynasty fantasy football. The veterans know each other's tendencies, the waiver wire, the scoring system, the rhythms of the league.</p>
+        <p>TheCadester went 10-18. That's not glamorous. But 10 wins as a first-year manager in a league with this level of talent — coalj, arwandl3r, rbenson4 — is a foundation to build from. The PF total of 2,600.34 shows the roster can score points, which is the first test. The league isn't going to hand you a winning record in year one just because you showed up.</p>
+        <p>Year two is the one that matters. A true rookie season is a learning experience — the mistakes are expected, the losses are tuition. TheCadester now has a full season of data, a better understanding of this format, and a clear picture of what the roster needs. The question every new manager faces: can you take what you learned and actually apply it? The answer writes the next chapter.</p>
+      </div>
+    </div>
+
+    <div class="mb15">
+      <div class="blk-hdr">Season-by-Season</div>
+      <div style="overflow-x:auto;">
+        <table class="season-table">
+          <thead><tr><th>Season</th><th>Record</th><th>PF</th><th>PA</th><th>Finish</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td class="yr">2023</td><td style="color:var(--text-muted);">—</td><td>—</td><td>—</td><td>—</td><td>Not in league</td></tr>
+            <tr><td class="yr">2024</td><td style="color:var(--text-muted);">—</td><td>—</td><td>—</td><td>—</td><td>Not in league</td></tr>
+            <tr><td class="yr">2025</td><td class="loss-rec">10-18</td><td>2,600.34</td><td>2,761.76</td><td>6th</td><td>Rookie season · Joined via Reset</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="blk-hdr">Quick Stats</div>
+    <div class="qs-grid mb15">
+      <div class="qs-card"><div class="qs-val">10-18</div><div class="qs-lbl">All-Time Record</div></div>
+      <div class="qs-card"><div class="qs-val">35.7%</div><div class="qs-lbl">Win Rate</div></div>
+      <div class="qs-card"><div class="qs-val">2,600.34</div><div class="qs-lbl">Career PF</div></div>
+      <div class="qs-card"><div class="qs-val">0</div><div class="qs-lbl">Championships</div></div>
+      <div class="qs-card"><div class="qs-val">0</div><div class="qs-lbl">Career Trades</div></div>
+      <div class="qs-card"><div class="qs-val">TBD</div><div class="qs-lbl">Best Single Week</div></div>
+    </div>
+
+    <div class="rival-card">
+      <div class="rival-lbl">⚔️ Biggest Rival</div>
+      <div class="rival-name">DaWerni98</div>
+      <div class="rival-desc">Both teams found themselves in the bottom tier in 2025. DaWerni98 is a veteran underperformer; TheCadester is a new arrival still finding their footing. As TheCadester grows, the rivalry with the league's established basement crew will be the measuring stick for whether year two represents real improvement.</div>
+    </div>
+  </div>
+
 </section>
 
 <footer>Dysfunctional Dynasty &copy; 2026 — Powered by <span>LeagueSavant</span></footer>
+
+<script>
+function showTeam(id, btn) {
+  // Hide all profiles
+  document.querySelectorAll('.team-profile').forEach(p => p.classList.remove('active'));
+  // Show selected
+  document.getElementById('profile-' + id).classList.add('active');
+  // Update buttons
+  document.querySelectorAll('.team-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  // Scroll to profile
+  document.querySelector('.team-selector').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+</script>
 
 </body>
 </html>
